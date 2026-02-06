@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Page, Layout, Card, Heading, TextContainer, Tabs } from '@shopify/polaris';
+import { Page, Tabs } from '@shopify/polaris';
 import CollaboratorDashboard from './components/CollaboratorDashboard';
 import CreationCorner from './components/CreationCorner';
 import ResonanceAnalysis from './components/ResonanceAnalysis';
