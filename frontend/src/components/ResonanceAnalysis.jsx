@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import {
   Card,
-  Stack,
+  BlockStack,
+  InlineStack,
   TextField,
   Button,
   Text,
@@ -53,7 +54,7 @@ export default function ResonanceAnalysis() {
 
   return (
     <Card sectioned>
-      <Stack vertical spacing="loose">
+      <BlockStack gap="400">
         <TextField
           label="Analyze Text"
           placeholder="Enter text to analyze resonance..."
@@ -62,12 +63,14 @@ export default function ResonanceAnalysis() {
           multiline
           autoComplete="off"
         />
-        <Stack distribution="fillEvenly">
-          <Button onClick={handleAnalyze} disabled={loading || !text.trim()}>Analyze</Button>
-          <Button onClick={handleImprove} disabled={loading || !text.trim()}>
+        <InlineStack gap="200">
+          <Button onClick={handleAnalyze} disabled={loading || !text.trim()} fullWidth>
+            Analyze
+          </Button>
+          <Button onClick={handleImprove} disabled={loading || !text.trim()} fullWidth>
             Improve
           </Button>
-        </Stack>
+        </InlineStack>
         {loading && <Spinner accessibilityLabel="Loading" size="small" />}
         {analysis && (
           <div>
@@ -81,7 +84,7 @@ export default function ResonanceAnalysis() {
             <pre style={{ whiteSpace: 'pre-wrap' }}>{improved.improved}</pre>
           </div>
         )}
-      </Stack>
+      </BlockStack>
     </Card>
   );
 }
