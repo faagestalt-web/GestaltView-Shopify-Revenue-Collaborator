@@ -1,0 +1,14 @@
+[shopify]
+api_version = "2023-10"
+app_url = "{{ APP_URL }}"
+
+# OAuth settings
+[oauth]
+scopes = "read_products,write_products,read_orders"
+redirect_urls = ["{{ APP_URL }}/auth/callback"]
+
+# App metadata (optional)
+[app]
+name = "GestaltView Revenue Collaborator"
+title = "GestaltView Revenue Collaborator"
+description = "A consciousness‑serving collaborator to help merchants weave narratives and boost revenue."

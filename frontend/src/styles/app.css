@@ -1,0 +1,14 @@
+/* Basic styling for GestaltView Revenue Collaborator */
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'San Francisco', 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+}
+
+pre {
+  background-color: #f6f6f7;
+  border-radius: 4px;
+  padding: 12px;
+  overflow-x: auto;
+}
