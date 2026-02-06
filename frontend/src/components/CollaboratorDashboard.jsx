@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import {
   Card,
-  LegacyStack,
+  BlockStack,
   TextField,
   Button,
   ResourceList,
@@ -36,7 +36,7 @@ export default function CollaboratorDashboard() {
 
   return (
     <Card sectioned>
-      <LegacyStack vertical spacing="loose">
+      <BlockStack gap="400">
         <TextField
           label="Quick Bucket Drop"
           placeholder="Capture an idea or thought..."
@@ -61,7 +61,7 @@ export default function CollaboratorDashboard() {
             </ResourceItem>
           )}
         />
-      </LegacyStack>
+      </BlockStack>
     </Card>
   );
 }
