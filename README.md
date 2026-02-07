@@ -86,6 +86,17 @@ gestaltview_revenue_collaborator_app/
 
 7. **Install on your development store.**  Use the Shopify CLI to register and run the app.  Refer to the official Shopify documentation and the `shopify.app.toml` file for guidance on registration and OAuth callbacks.
 
+### Quick API smoke tests
+
+Once the backend is running, you can use the operational scripts in `scripts/` to validate the API quickly:
+
+```bash
+python scripts/api_examples.py
+bash scripts/api_examples.sh
+```
+
+Set `GESTALTVIEW_API_URL` if your backend is on a different host/port.
+
 ### Shopify CLI (app dev)
 
 If you prefer to run the app through the Shopify CLI (embedded app dev workflow), you can use `shopify app dev` from the repository root. This will use `shopify.app.toml` for config and can optionally skip tunnel creation if you are testing locally:

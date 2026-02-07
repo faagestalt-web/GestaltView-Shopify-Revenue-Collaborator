@@ -9,13 +9,14 @@ This repo includes a Node/React Shopify app. Below are **copy-paste-friendly** e
 
 ## Python examples
 
-Save as `scripts/api_examples.py` (or run inline) and adjust URLs as needed.
+Run the operational script (already in the repo) and adjust URLs as needed.
 
 ```python
 import json
+import os
 import requests
 
-BASE_URL = "http://localhost:3000"
+BASE_URL = os.getenv("GESTALTVIEW_API_URL", "http://localhost:3000")
 
 # 1) Capture a bucket drop
 bucket_payload = {"text": "New product idea: seasonal gift bundles", "tags": ["idea", "seasonal"]}
@@ -38,11 +39,17 @@ improve_res = requests.post(f"{BASE_URL}/api/collaborator/improve", json=improve
 print("Improved:", json.dumps(improve_res.json(), indent=2))
 ```
 
+Run it with:
+
+```bash
+python scripts/api_examples.py
+```
+
 > Note: Install Python dependencies with `pip install requests` if needed.
 
 ## Shell script examples (curl)
 
-Save as `scripts/api_examples.sh` and run with `bash scripts/api_examples.sh`.
+Run the operational script (already in the repo) with `bash scripts/api_examples.sh`.
 
 ```bash
 #!/usr/bin/env bash
@@ -76,3 +83,13 @@ curl -sS "${BASE_URL}/api/collaborator/improve" \
 ```
 
 > Note: Install `jq` for pretty-printed JSON output (`brew install jq` on macOS).
+
+### Environment override
+
+You can point the scripts at a different backend by setting `GESTALTVIEW_API_URL`, e.g.:
+
+```bash
+export GESTALTVIEW_API_URL="http://localhost:3000"
+python scripts/api_examples.py
+bash scripts/api_examples.sh
+```
