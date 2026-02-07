@@ -1,11 +1,11 @@
 [shopify]
 api_version = "2023-10"
-app_url = "{{ APP_URL }}"
+app_url = "{{ delivery@shopify-pubsub-webhooks.iam.gserviceaccount.com }}"
 
 # OAuth settings
 [oauth]
 scopes = "read_products,write_products,read_orders"
-redirect_urls = ["{{ APP_URL }}/auth/callback"]
+redirect_urls = ["{{ delivery@shopify-pubsub-webhooks.iam.gserviceaccount.com }}/auth/callback"]
 
 # App metadata (optional)
 [app]
