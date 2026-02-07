@@ -84,7 +84,7 @@ export default function ResonanceAnalysis() {
             <pre style={{ whiteSpace: 'pre-wrap' }}>{improved.improved}</pre>
           </div>
         )}
-      </BlockStack>
+it      </BlockStack>
     </Card>
   );
 }
