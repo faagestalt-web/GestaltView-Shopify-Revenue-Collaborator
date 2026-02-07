@@ -1,15 +1,17 @@
 [shopify]
 api_version = "2023-10"
-app_url = "http://localhost:3000"
-client_id = "2f9e46681eb5ffe539a42117a1f697e4"
+app_url = "{{ delivery@shopify-pubsub-webhooks.iam.gserviceaccount.com }}"
 
 # OAuth settings
 [oauth]
 scopes = "read_products,write_products,read_orders"
-redirect_urls = ["http://localhost:3000/auth/callback"]
+redirect_urls = ["{{ delivery@shopify-pubsub-webhooks.iam.gserviceaccount.com }}/auth/callback"]
 
 # App metadata (optional)
 [app]
 name = "GestaltView Revenue Collaborator"
 title = "GestaltView Revenue Collaborator"
-description = "A consciousness-serving collaborator to help merchants weave narratives and boost revenue."
+description = "A consciousness‑serving collaborator to help merchants weave narratives and boost revenue."
+[client_id] = "2f9e46681eb5ffe539a42117a1f697e4"
+Shopify API = "d8fcebeb31d2b807965bad5b35844104"
+Secret = "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"
