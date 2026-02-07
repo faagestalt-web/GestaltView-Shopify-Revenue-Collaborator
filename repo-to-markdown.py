@@ -11,7 +11,7 @@ from datetime import datetime
 import mimetypes
 
 # Configuration
-REPO_ROOT = Path(__file__).parent.parent
+REPO_ROOT = Path(__file__).resolve().parent
 OUTPUT_DIR = REPO_ROOT / "exports"
 OUTPUT_FILE = OUTPUT_DIR / f"repo-snapshot-{datetime.now().strftime('%Y%m%d-%H%M%S')}.md"
 
