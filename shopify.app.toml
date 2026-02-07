@@ -12,3 +12,4 @@ redirect_urls = ["{{ APP_URL }}/auth/callback"]
 name = "GestaltView Revenue Collaborator"
 title = "GestaltView Revenue Collaborator"
 description = "A consciousness‑serving collaborator to help merchants weave narratives and boost revenue."
+[client_id] = "2f9e46681eb5ffe539a42117a1f697e4"
