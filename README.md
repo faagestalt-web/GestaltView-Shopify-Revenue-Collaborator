@@ -43,6 +43,7 @@ gestaltview_revenue_collaborator_app/
 > * Node.js (v18 or later) and npm installed
 > * A Shopify Partner account and development store
 > * (Optional) Python 3.11+ if you wish to run the PLK analysis microservice
+> * (Optional) Shopify CLI for running `shopify app dev`
 
 ### Installation
 
@@ -84,6 +85,16 @@ gestaltview_revenue_collaborator_app/
    ```
 
 7. **Install on your development store.**  Use the Shopify CLI to register and run the app.  Refer to the official Shopify documentation and the `shopify.app.toml` file for guidance on registration and OAuth callbacks.
+
+### Shopify CLI (app dev)
+
+If you prefer to run the app through the Shopify CLI (embedded app dev workflow), you can use `shopify app dev` from the repository root. This will use `shopify.app.toml` for config and can optionally skip tunnel creation if you are testing locally:
+
+```bash
+shopify app dev --use-localhost
+```
+
+Common flags include `--store`, `--client-id`, and `--tunnel-url` if you need to bind to a specific dev store or reuse an existing tunnel.
 
 ## Features
 
