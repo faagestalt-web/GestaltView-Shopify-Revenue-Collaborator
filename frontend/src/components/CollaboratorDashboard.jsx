@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import {
   Card,
-  LegacyStack,
+  BlockStack,
   TextField,
   Button,
   ResourceList,
@@ -26,7 +26,8 @@ export default function CollaboratorDashboard() {
       });
       const data = await res.json();
       setDrops([data.drop, ...drops]);
-      setDropText('');
+      setDropText('');o 
+      
     } catch (err) {
       console.error(err);
     } finally {
@@ -36,7 +37,7 @@ export default function CollaboratorDashboard() {
 
   return (
     <Card sectioned>
-      <LegacyStack vertical spacing="loose">
+      <BlockStack gap="400">
         <TextField
           label="Quick Bucket Drop"
           placeholder="Capture an idea or thought..."
@@ -61,7 +62,7 @@ export default function CollaboratorDashboard() {
             </ResourceItem>
           )}
         />
-      </LegacyStack>
+      </BlockStack>
     </Card>
   );
 }

@@ -1,0 +1,1723 @@
+{
+  "$schema": "https://gestaltview.ai/schemas/repo_manifest.v1.json",
+  "manifest_version": "1.0.0",
+  "generated_utc": "2026-02-01T03:30:18.209115Z",
+  "repo": {
+    "name": "GestaltView Sidekick Studio (Starter) - Enhanced",
+    "root": "GestaltView-Adaptive-Schema-main",
+    "description": "BYOK sidekick builder + chat UI with multi-provider support and scaffolding for multi-agent orchestration, GraphRAG, and MCP.",
+    "entrypoints": [
+      "gestaltview-sidekick-starter/backend/app/main.py",
+      "gestaltview-sidekick-starter/frontend/src/main.tsx",
+      "gestaltview-sidekick-starter/frontend/src/App.tsx",
+      "gestaltview-sidekick-starter/docker-compose.yml",
+      "gestaltview-sidekick-starter/docker-compose.dev.yml",
+      "gestaltview-sidekick-starter/backend/Dockerfile",
+      "gestaltview-sidekick-starter/frontend/Dockerfile"
+    ],
+    "primary_docs": [
+      "README.md",
+      "ENHANCEMENTS.md",
+      "CodexAgent.md"
+    ]
+  },
+  "components": [
+    {
+      "id": "root_docs",
+      "name": "Repository docs & guides",
+      "path": ".",
+      "description": "Top-level docs describing the Sidekick Studio starter, enhancements, and Codex agent notes.",
+      "key_files": [
+        "README.md",
+        "ENHANCEMENTS.md",
+        "CodexAgent.md"
+      ]
+    },
+    {
+      "id": "sidekick_starter",
+      "name": "Sidekick Studio app",
+      "path": "gestaltview-sidekick-starter",
+      "description": "Main application: FastAPI backend + React frontend + scripts + shared types.",
+      "subsystems": [
+        {
+          "id": "backend",
+          "path": "gestaltview-sidekick-starter/backend",
+          "stack": [
+            "python",
+            "fastapi"
+          ],
+          "entrypoint": "gestaltview-sidekick-starter/backend/app/main.py"
+        },
+        {
+          "id": "frontend",
+          "path": "gestaltview-sidekick-starter/frontend",
+          "stack": [
+            "typescript",
+            "react",
+            "vite"
+          ],
+          "entrypoint": "gestaltview-sidekick-starter/frontend/src/main.tsx"
+        },
+        {
+          "id": "providers",
+          "path": "gestaltview-sidekick-starter/backend/app/providers",
+          "description": "Provider adapters (OpenAI/Anthropic/Gemini/HF/MCP stubs)."
+        },
+        {
+          "id": "services",
+          "path": "gestaltview-sidekick-starter/backend/app/services",
+          "description": "GestaltView engines, orchestration skeletons, context ingestion/weaving, manifest tooling, and creative modules."
+        },
+        {
+          "id": "shared",
+          "path": "gestaltview-sidekick-starter/shared",
+          "description": "Shared schemas/types between FE & BE."
+        },
+        {
+          "id": "scripts",
+          "path": "gestaltview-sidekick-starter/scripts",
+          "description": "Dev scripts (lint, run, generate exports)."
+        }
+      ],
+      "dev_ops": {
+        "docker_compose": [
+          "gestaltview-sidekick-starter/docker-compose.yml",
+          "gestaltview-sidekick-starter/docker-compose.dev.yml"
+        ],
+        "repo_to_markdown": [
+          "gestaltview-sidekick-starter/repo-to-markdown.py",
+          "gestaltview-sidekick-starter/repo-to-markdown.sh"
+        ]
+      }
+    }
+  ],
+  "agent_collaboration": {
+    "overview": "This manifest is optimized for multi-agent collaboration: agents should choose a role, load the primary_paths, then use tags/keywords to locate supporting files quickly.",
+    "agents": [
+      {
+        "id": "architect",
+        "name": "Architect",
+        "focus": [
+          "system design",
+          "module boundaries",
+          "interfaces",
+          "roadmap"
+        ],
+        "primary_paths": [
+          "README.md",
+          "ENHANCEMENTS.md",
+          "gestaltview-sidekick-starter/backend/app/models.py",
+          "gestaltview-sidekick-starter/shared"
+        ],
+        "safe_edits": [
+          "docs",
+          "schemas",
+          "interfaces"
+        ]
+      },
+      {
+        "id": "backend_engineer",
+        "name": "Backend Engineer",
+        "focus": [
+          "FastAPI endpoints",
+          "provider adapters",
+          "storage",
+          "orchestration"
+        ],
+        "primary_paths": [
+          "gestaltview-sidekick-starter/backend/app/main.py",
+          "gestaltview-sidekick-starter/backend/app/providers",
+          "gestaltview-sidekick-starter/backend/app/services",
+          "gestaltview-sidekick-starter/backend/app/utils"
+        ],
+        "safe_edits": [
+          "python",
+          "json",
+          "md"
+        ]
+      },
+      {
+        "id": "frontend_engineer",
+        "name": "Frontend Engineer",
+        "focus": [
+          "UI/UX for Sidekick Builder + Chat",
+          "state management",
+          "API integration"
+        ],
+        "primary_paths": [
+          "gestaltview-sidekick-starter/frontend/src/components",
+          "gestaltview-sidekick-starter/frontend/src/App.tsx"
+        ],
+        "safe_edits": [
+          "tsx",
+          "css"
+        ]
+      },
+      {
+        "id": "prompt_weaver",
+        "name": "Prompt Weaver",
+        "focus": [
+          "seed prompt",
+          "PLK integration",
+          "ethics guardrails",
+          "prompt templates"
+        ],
+        "primary_paths": [
+          "gestaltview-sidekick-starter/backend/app/utils/prompt_templates_enhanced.py",
+          "gestaltview-sidekick-starter/backend/app/gestaltview_ethics.json",
+          "gestaltview-sidekick-starter/backend/app/services/ethical_framework.py"
+        ],
+        "safe_edits": [
+          "prompts",
+          "json configs"
+        ]
+      },
+      {
+        "id": "qa_security",
+        "name": "QA & Security",
+        "focus": [
+          "testing",
+          "security review",
+          "secrets handling",
+          "policy compliance"
+        ],
+        "primary_paths": [
+          "gestaltview-sidekick-starter/backend/app/gestaltview_ethics.json",
+          "gestaltview-sidekick-starter/backend/app/providers",
+          "gestaltview-sidekick-starter/frontend/src/components/ProviderSettings.tsx",
+          "gestaltview-sidekick-starter/docker-compose*.yml"
+        ],
+        "safe_edits": [
+          "tests",
+          "docs",
+          "config"
+        ]
+      }
+    ],
+    "coordination_protocol": {
+      "recommended_cycle": [
+        "Architect -> Prompt Weaver -> Backend Engineer -> Frontend Engineer -> QA & Security"
+      ],
+      "handoff_artifacts": [
+        "issue_brief.md",
+        "design_notes.md",
+        "diff_summary.md"
+      ],
+      "definition_of_done": [
+        "manifest updated",
+        "docs updated",
+        "tests passing (when present)",
+        "no secrets stored server-side"
+      ]
+    }
+  },
+  "operationalization": {
+    "manifest_index_layer": {
+      "exists_in_repo": true,
+      "candidate_paths": [
+        "gestaltview-sidekick-starter/backend/app/services/GestaltView Manifest Index Layer.py",
+        "gestaltview-sidekick-starter/backend/app/services/manifest_index.py"
+      ],
+      "purpose": "Builds deeper semantic manifests (concepts, modules, relationships, and context-spine hooks) beyond a file list.",
+      "recommended_outputs": [
+        "exports/manifest_index.json",
+        "exports/module_map.json",
+        "exports/concept_index.json"
+      ]
+    }
+  },
+  "breakthroughs": [
+    {
+      "title": "LangGraph Workflow Skeleton",
+      "source": "ENHANCEMENTS.md"
+    },
+    {
+      "title": "Model Context Protocol (MCP) Provider",
+      "source": "ENHANCEMENTS.md"
+    },
+    {
+      "title": "GraphRAG Pipeline Sketch",
+      "source": "ENHANCEMENTS.md"
+    },
+    {
+      "title": "Ethical and Security Considerations",
+      "source": "ENHANCEMENTS.md"
+    },
+    {
+      "title": "Additional Enhancements",
+      "source": "ENHANCEMENTS.md"
+    },
+    {
+      "title": "How to Use These Enhancements",
+      "source": "ENHANCEMENTS.md"
+    }
+  ],
+  "file_index": {
+    "total_files": 116,
+    "files": [
+      {
+        "path": "ENHANCEMENTS.md",
+        "size_bytes": 4465,
+        "modified_utc": "2026-02-01T03:28:07.052483Z",
+        "sha256": "44270d04f418536ce3491e6cd21ca210cd6dbb146fce60d5e92b4d13b7413fc1",
+        "ext": ".md",
+        "mime": "text/markdown"
+      },
+      {
+        "path": "README.md",
+        "size_bytes": 5786,
+        "modified_utc": "2026-02-01T03:28:07.052825Z",
+        "sha256": "50698506701f07f7d57dd73d30c98e7840eb67e81e661c9611bc00b3850b0033",
+        "ext": ".md",
+        "mime": "text/markdown"
+      },
+      {
+        "path": "CodexAgent.md",
+        "size_bytes": 35127,
+        "modified_utc": "2026-02-01T03:28:07.053640Z",
+        "sha256": "1ae5233e3c5394d2e4cee2700b70fdda52cbd465669f592dfef042b8d2310d42",
+        "ext": ".md",
+        "mime": "text/markdown"
+      },
+      {
+        "path": "gestaltview-sidekick-starter/LICENSE",
+        "size_bytes": 1056,
+        "modified_utc": "2026-02-01T03:28:06.521207Z",
+        "sha256": "1126322e2cc8d165adc4c792eeb195717de2bcc7b39be1ce77959d78e87ef685",
+        "ext": "",
+        "mime": "application/octet-stream"
+      },
+      {
+        "path": "gestaltview-sidekick-starter/README.md",
+        "size_bytes": 4193,
+        "modified_utc": "2026-02-01T03:28:06.522002Z",
+        "sha256": "9ec768f5e3c148433a4365b698dae108349f43f2e6c34fd8d748ab201d59f4b1",
+        "ext": ".md",
+        "mime": "text/markdown"
+      },
+      {
+        "path": "gestaltview-sidekick-starter/repo-to-markdown.py",
+        "size_bytes": 8998,
+        "modified_utc": "2026-02-01T03:28:06.522665Z",
+        "sha256": "ff1489f600cb4bd6205dd3f008f7f3489d0d310bca12b6a4034be02b7ca3c06e",
+        "ext": ".py",
+        "mime": "text/x-python"
+      },
+      {
+        "path": "gestaltview-sidekick-starter/docker-compose.dev.yml",
+        "size_bytes": 1517,
+        "modified_utc": "2026-02-01T03:28:06.522994Z",
+        "sha256": "fba4df45c966e37df13841565dbf5eef35fb8664e267cf1d0951bba951b5037f",
+        "ext": ".yml",
+        "mime": "application/octet-stream"
+      },
+      {
+        "path": "gestaltview-sidekick-starter/.gitignore",
+        "size_bytes": 119,
+        "modified_utc": "2026-02-01T03:28:06.523343Z",
+        "sha256": "410524084b1db65792b0572d1f0f19ebed28fe544af751892d20cdc884273597",
+        "ext": "",
+        "mime": "application/octet-stream"
+      },
+      {
+        "path": "gestaltview-sidekick-starter/docker-compose.yml",
+        "size_bytes": 1245,
+        "modified_utc": "2026-02-01T03:28:06.556259Z",
+        "sha256": "512d7e23d896369500f6fa69798af77018fa45b456ad88234be6e90d88f4c82c",
+        "ext": ".yml",
+        "mime": "application/octet-stream"
+      },
+      {
+        "path": "gestaltview-sidekick-starter/repo-to-markdown.sh",
+        "size_bytes": 5534,
+        "modified_utc": "2026-02-01T03:28:06.558140Z",
+        "sha256": "530062cb7ff8634e112da6da30da0925fcfc805bd3060c08104c8191beadcc5e",
+        "ext": ".sh",
+        "mime": "text/x-sh"
+      },
+      {
+        "path": "gestaltview-sidekick-starter/frontend/package-lock.json",
+        "size_bytes": 61606,
+        "modified_utc": "2026-02-01T03:28:06.446474Z",
+        "sha256": "00cf87490d3eb00b584f60e7b063e13de2b73b5291c90c42cfdc440ca8037967",
+        "ext": ".json",
+        "mime": "application/json"
+      },
+      {
+        "path": "gestaltview-sidekick-starter/frontend/vite.config.ts",
+        "size_bytes": 166,
+        "modified_utc": "2026-02-01T03:28:06.447087Z",
+        "sha256": "ee71b00347107be3370b1e847e111194dc2f46c26b688d3a4c5a2343547d0c88",
+        "ext": ".ts",
+        "mime": "text/vnd.trolltech.linguist"
+      },
+      {
+        "path": "gestaltview-sidekick-starter/frontend/Dockerfile",
+        "size_bytes": 142,
+        "modified_utc": "2026-02-01T03:28:06.469764Z",
+        "sha256": "f2a4e0de55902cfed88bbefe4f692c47f4c66de52a303a2002387e851aee640d",
+        "ext": "",
+        "mime": "application/octet-stream"
+      },
+      {
+        "path": "gestaltview-sidekick-starter/frontend/tsconfig.json",
+        "size_bytes": 368,
+        "modified_utc": "2026-02-01T03:28:06.469943Z",
+        "sha256": "c58258d4349d64254830182a56a6c031760d6471795d44739350f2a5d6fb9e4b",
+        "ext": ".json",
+        "mime": "application/json"
+      },
+      {
+        "path": "gestaltview-sidekick-starter/frontend/package.json",
+        "size_bytes": 537,
+        "modified_utc": "2026-02-01T03:28:06.470093Z",
+        "sha256": "dcaaaf58ce17806ddbf34e5c2e696e853feb714459b5d8cd4d25e90a85f0e0c7",
+        "ext": ".json",
+        "mime": "application/json"
+      },
+      {
+        "path": "gestaltview-sidekick-starter/frontend/index.html",
+        "size_bytes": 302,
+        "modified_utc": "2026-02-01T03:28:06.470663Z",
+        "sha256": "a6f0646e7024404b1be9388be693b94eaa8b3cb54e1639795ee8f7e86c90277c",
+        "ext": ".html",
+        "mime": "text/html"
+      },
+      {
+        "path": "gestaltview-sidekick-starter/frontend/src/App.tsx",
+        "size_bytes": 7654,
+        "modified_utc": "2026-02-01T03:28:06.468683Z",
+        "sha256": "61f7a87661bc3cfe4510a8f95c320f640e20ced55c019d8650053d07fcc39eca",
+        "ext": ".tsx",
+        "mime": "application/octet-stream"
+      },
+      {
+        "path": "gestaltview-sidekick-starter/frontend/src/main.tsx",
+        "size_bytes": 237,
+        "modified_utc": "2026-02-01T03:28:06.469390Z",
+        "sha256": "9a76dbe72be0a91e38174d686cc2890e9bead624891e38e9d9ae84738914fee0",
+        "ext": ".tsx",
+        "mime": "application/octet-stream"
+      },
+      {
+        "path": "gestaltview-sidekick-starter/frontend/src/components/ChatPanel.tsx",
+        "size_bytes": 3660,
+        "modified_utc": "2026-02-01T03:28:06.448369Z",
+        "sha256": "9cec3ab5bbb3973cf47b95f8efebc88850f43da7504f226e9ee2e3571a970e8b",
+        "ext": ".tsx",
+        "mime": "application/octet-stream"
+      },
+      {
+        "path": "gestaltview-sidekick-starter/frontend/src/components/types.ts",
+        "size_bytes": 885,
+        "modified_utc": "2026-02-01T03:28:06.449165Z",
+        "sha256": "3e17ee81135de8b1c8fea2a753b53b40dac59078e122e3bf28650baf7a46db0e",
+        "ext": ".ts",
+        "mime": "text/vnd.trolltech.linguist"
+      },
+      {
+        "path": "gestaltview-sidekick-starter/frontend/src/components/ProviderSettings.tsx",
+        "size_bytes": 2891,
+        "modified_utc": "2026-02-01T03:28:06.449965Z",
+        "sha256": "b1eb76ab91e05ecce56f95a1694003859621507671eb0af8426fc30c5652d139",
+        "ext": ".tsx",
+        "mime": "application/octet-stream"
+      },
+      {
+        "path": "gestaltview-sidekick-starter/frontend/src/components/AppHeader.tsx",
+        "size_bytes": 1168,
+        "modified_utc": "2026-02-01T03:28:06.450510Z",
+        "sha256": "f475a94331a388ba4f525f06f85f5b55b1756c4ce937936a63d5b89018b9e749",
+        "ext": ".tsx",
+        "mime": "application/octet-stream"
+      },
+      {
+        "path": "gestaltview-sidekick-starter/frontend/src/components/api.ts",
+        "size_bytes": 2417,
+        "modified_utc": "2026-02-01T03:28:06.450950Z",
+        "sha256": "8c789727d04bee7a5adccdb19762fb40a6a1d4ba824b71b66453580281e53649",
+        "ext": ".ts",
+        "mime": "text/vnd.trolltech.linguist"
+      },
+      {
+        "path": "gestaltview-sidekick-starter/frontend/src/components/SuiteStatus.tsx",
+        "size_bytes": 726,
+        "modified_utc": "2026-02-01T03:28:06.451480Z",
+        "sha256": "87c6a2f502f8b90d82b3c11be644e6739b7770a07f43af32865b252ad47c8733",
+        "ext": ".tsx",
+        "mime": "application/octet-stream"
+      },
+      {
+        "path": "gestaltview-sidekick-starter/frontend/src/components/WorkspaceOverview.tsx",
+        "size_bytes": 1012,
+        "modified_utc": "2026-02-01T03:28:06.451958Z",
+        "sha256": "98c88458c81b99de574aeb66af66e59192dd4772f434ee72bd94415b1fcce226",
+        "ext": ".tsx",
+        "mime": "application/octet-stream"
+      },
+      {
+        "path": "gestaltview-sidekick-starter/frontend/src/components/SidekickBuilder.tsx",
+        "size_bytes": 8949,
+        "modified_utc": "2026-02-01T03:28:06.452529Z",
+        "sha256": "fedf4d0158963a4e31d0dd6881457f53fb31402447589312da0e7fa22a7008be",
+        "ext": ".tsx",
+        "mime": "application/octet-stream"
+      },
+      {
+        "path": "gestaltview-sidekick-starter/frontend/src/styles/globals.css",
+        "size_bytes": 37537,
+        "modified_utc": "2026-02-01T03:28:06.467384Z",
+        "sha256": "b204f4052ed0ff993e358189075e39b3a9d399812ea94367c86ad0aa614e98dd",
+        "ext": ".css",
+        "mime": "text/css"
+      },
+      {
+        "path": "gestaltview-sidekick-starter/frontend/src/styles/app.css",
+        "size_bytes": 4658,
+        "modified_utc": "2026-02-01T03:28:06.468101Z",
+        "sha256": "a68b755672f6b300aa121e45425a142aab3d8deb41f8b8a8743ef3ea2b84fe49",
+        "ext": ".css",
+        "mime": "text/css"
+      },
+      {
+        "path": "gestaltview-sidekick-starter/frontend/app/components/creation_corner.tsx",
+        "size_bytes": 9398,
+        "modified_utc": "2026-02-01T03:28:06.470447Z",
+        "sha256": "4c3030024ad9c342b5d51abec245ba11334d3519ab3fb70389365fbf83c3114f",
+        "ext": ".tsx",
+        "mime": "application/octet-stream"
+      },
+      {
+        "path": "gestaltview-sidekick-starter/.github/gestaltview.py",
+        "size_bytes": 39406,
+        "modified_utc": "2026-02-01T03:28:06.471279Z",
+        "sha256": "57b5895623a984f404f589e7cfcbea9f616b31d9299d73ac87fcdee9276e8b3f",
+        "ext": ".py",
+        "mime": "text/x-python"
+      },
+      {
+        "path": "gestaltview-sidekick-starter/.github/gestaltview_seed.py",
+        "size_bytes": 6846,
+        "modified_utc": "2026-02-01T03:28:06.471668Z",
+        "sha256": "5caab430aa593c4444ec2d23d03466ced89e27894c1317c18330e55c39b3f91c",
+        "ext": ".py",
+        "mime": "text/x-python"
+      },
+      {
+        "path": "gestaltview-sidekick-starter/.github/`#U2022#U25cb#U25cfBilly_11_18_25#U25cf#U25cb#U00b0`.txt",
+        "size_bytes": 375657,
+        "modified_utc": "2026-02-01T03:28:06.515402Z",
+        "sha256": "70592a92c343efb55dccdcb53994818954b51ded3da160b438c2783a0e44e388",
+        "ext": ".txt",
+        "mime": "text/plain"
+      },
+      {
+        "path": "gestaltview-sidekick-starter/legacy/README_ENHANCED.md",
+        "size_bytes": 12848,
+        "modified_utc": "2026-02-01T03:28:06.516775Z",
+        "sha256": "e67990e7023d7fa8b698954aa147c5419ec27fed0c7b79cab8b67f1debdb7487",
+        "ext": ".md",
+        "mime": "text/markdown"
+      },
+      {
+        "path": "gestaltview-sidekick-starter/legacy/gestaltview_system_enhanced_2.py",
+        "size_bytes": 32709,
+        "modified_utc": "2026-02-01T03:28:06.517625Z",
+        "sha256": "33212ac7d9cbd49d817a87e41fe0bba30cdc1277ce61f780852d4643e59abb7f",
+        "ext": ".py",
+        "mime": "text/x-python"
+      },
+      {
+        "path": "gestaltview-sidekick-starter/legacy/custom_ai_collaborator_enhanced.py",
+        "size_bytes": 16528,
+        "modified_utc": "2026-02-01T03:28:06.518553Z",
+        "sha256": "12f079f047b9209b9271e13f68a2b1f7a157f15fdd2383ff9b01eaa700514b73",
+        "ext": ".py",
+        "mime": "text/x-python"
+      },
+      {
+        "path": "gestaltview-sidekick-starter/legacy/gestaltview_system_enhanced_1.py",
+        "size_bytes": 23673,
+        "modified_utc": "2026-02-01T03:28:06.519410Z",
+        "sha256": "5f9dcc540260bdd9fb447079b817fce17a7c1fca62ad362a3bea84e714abeb01",
+        "ext": ".py",
+        "mime": "text/x-python"
+      },
+      {
+        "path": "gestaltview-sidekick-starter/legacy/gestaltview_system_enhanced.py",
+        "size_bytes": 12946,
+        "modified_utc": "2026-02-01T03:28:06.520179Z",
+        "sha256": "3a74d3d159478b77d40b31d2997b8ca1c30d23382ba6600505bb601f6eddb25e",
+        "ext": ".py",
+        "mime": "text/x-python"
+      },
+      {
+        "path": "gestaltview-sidekick-starter/legacy/MIGRATION_GUIDE.md",
+        "size_bytes": 4826,
+        "modified_utc": "2026-02-01T03:28:06.520744Z",
+        "sha256": "0658219a80e6f0aee97e119ef486f4d5cc0e3e46ab35083dd03bf169e4ab26f5",
+        "ext": ".md",
+        "mime": "text/markdown"
+      },
+      {
+        "path": "gestaltview-sidekick-starter/client/README_CLIENT.md",
+        "size_bytes": 668,
+        "modified_utc": "2026-02-01T03:28:06.521658Z",
+        "sha256": "479a16a73cb5476e3e1b13659ffa4286b9e77dcd0fa1464e19657da27582538d",
+        "ext": ".md",
+        "mime": "text/markdown"
+      },
+      {
+        "path": "gestaltview-sidekick-starter/client/docker-compose.yml",
+        "size_bytes": 367,
+        "modified_utc": "2026-02-01T03:28:06.521817Z",
+        "sha256": "de9a4746ae425ce586066137822fd5c7520afc3752fc0cf54a719f3c5eb53c0e",
+        "ext": ".yml",
+        "mime": "application/octet-stream"
+      },
+      {
+        "path": "gestaltview-sidekick-starter/shared/sidekick_spec.schema.json",
+        "size_bytes": 1619,
+        "modified_utc": "2026-02-01T03:28:06.522239Z",
+        "sha256": "06b189a9cc4cf1d8a1dcdea06043afcc4d50b3097bc92d3a398b161de7ba8e50",
+        "ext": ".json",
+        "mime": "application/json"
+      },
+      {
+        "path": "gestaltview-sidekick-starter/backend/Dockerfile",
+        "size_bytes": 392,
+        "modified_utc": "2026-02-01T03:28:06.523952Z",
+        "sha256": "fbeec7b8e0a5686b6811cc03f7a16030374eb53af269b1e0a65edd8bdd792c3f",
+        "ext": "",
+        "mime": "application/octet-stream"
+      },
+      {
+        "path": "gestaltview-sidekick-starter/backend/requirements.txt",
+        "size_bytes": 100,
+        "modified_utc": "2026-02-01T03:28:06.556097Z",
+        "sha256": "ef6afdb40b62cfa1849b1c64c17a6f5dc63b7bca1beb5d8923f04ea5a93ee94b",
+        "ext": ".txt",
+        "mime": "text/plain"
+      },
+      {
+        "path": "gestaltview-sidekick-starter/backend/app/context_ingestion.py",
+        "size_bytes": 8567,
+        "modified_utc": "2026-02-01T03:28:06.524600Z",
+        "sha256": "40f7f3646a066bc3ac4df634b0749b0b6aa132e19662f7a9a27c5d5af24cf46c",
+        "ext": ".py",
+        "mime": "text/x-python"
+      },
+      {
+        "path": "gestaltview-sidekick-starter/backend/app/__init__.py",
+        "size_bytes": 0,
+        "modified_utc": "2026-02-01T03:28:06.524951Z",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "ext": ".py",
+        "mime": "text/x-python"
+      },
+      {
+        "path": "gestaltview-sidekick-starter/backend/app/gestaltview_codex.md",
+        "size_bytes": 3429,
+        "modified_utc": "2026-02-01T03:28:06.550151Z",
+        "sha256": "b75c6c5bdbffdb2329582d2faee8edd7f08c71f7ac1f53608d442070df35dd5f",
+        "ext": ".md",
+        "mime": "text/markdown"
+      },
+      {
+        "path": "gestaltview-sidekick-starter/backend/app/gestaltview_ethics.json",
+        "size_bytes": 2658,
+        "modified_utc": "2026-02-01T03:28:06.554750Z",
+        "sha256": "34ff1c330f13743e16a7e7ee306f6daa048707dc044b40ce91168073f7198ad5",
+        "ext": ".json",
+        "mime": "application/json"
+      },
+      {
+        "path": "gestaltview-sidekick-starter/backend/app/main.py",
+        "size_bytes": 7305,
+        "modified_utc": "2026-02-01T03:28:06.555036Z",
+        "sha256": "68e77cd40a05947be33b40a9c375a0370e23d1198d90a64677bfca1118e82c43",
+        "ext": ".py",
+        "mime": "text/x-python"
+      },
+      {
+        "path": "gestaltview-sidekick-starter/backend/app/context_sources.py",
+        "size_bytes": 954,
+        "modified_utc": "2026-02-01T03:28:06.555267Z",
+        "sha256": "a5a569611b0f2011a7311688417de42bd0ed20b6693255515e8be040202eb275",
+        "ext": ".py",
+        "mime": "text/x-python"
+      },
+      {
+        "path": "gestaltview-sidekick-starter/backend/app/storage.py",
+        "size_bytes": 874,
+        "modified_utc": "2026-02-01T03:28:06.555511Z",
+        "sha256": "f0f91f845d6b29838849616600b42a41c4c3b439a3a25e16cf25708314c7e6bb",
+        "ext": ".py",
+        "mime": "text/x-python"
+      },
+      {
+        "path": "gestaltview-sidekick-starter/backend/app/billy_agent.py",
+        "size_bytes": 3104,
+        "modified_utc": "2026-02-01T03:28:06.555745Z",
+        "sha256": "6526ef6cb0c55ab70163dfdea105b09618d006ef49e9b76489de09a66d5666b4",
+        "ext": ".py",
+        "mime": "text/x-python"
+      },
+      {
+        "path": "gestaltview-sidekick-starter/backend/app/models.py",
+        "size_bytes": 4360,
+        "modified_utc": "2026-02-01T03:28:06.555969Z",
+        "sha256": "be9da44e3120745fc4319e7c924da4203a7a4ea3fbb6e2ad2b1f94fe5ba95a44",
+        "ext": ".py",
+        "mime": "text/x-python"
+      },
+      {
+        "path": "gestaltview-sidekick-starter/backend/app/providers/__init__.py",
+        "size_bytes": 753,
+        "modified_utc": "2026-02-01T03:28:06.525658Z",
+        "sha256": "8fe772deaad599473449523aefc42abe45916dfec543adde383b9b6fe6e6199b",
+        "ext": ".py",
+        "mime": "text/x-python"
+      },
+      {
+        "path": "gestaltview-sidekick-starter/backend/app/providers/openai_provider.py",
+        "size_bytes": 1683,
+        "modified_utc": "2026-02-01T03:28:06.526028Z",
+        "sha256": "8b1d6fa424141e373969b77bc9ba418b1161e903dd010c23d0bf0d8fe968682d",
+        "ext": ".py",
+        "mime": "text/x-python"
+      },
+      {
+        "path": "gestaltview-sidekick-starter/backend/app/providers/huggingface_provider.py",
+        "size_bytes": 4009,
+        "modified_utc": "2026-02-01T03:28:06.526335Z",
+        "sha256": "9ad36616ab92d10c4a45944f186b738180d2c8af989cc81efb73ef1c9f6fcd89",
+        "ext": ".py",
+        "mime": "text/x-python"
+      },
+      {
+        "path": "gestaltview-sidekick-starter/backend/app/providers/base.py",
+        "size_bytes": 626,
+        "modified_utc": "2026-02-01T03:28:06.526881Z",
+        "sha256": "e13c47b265b55514da40f12e3e7be6f171ae14af0958ace40c89f9159bc8b297",
+        "ext": ".py",
+        "mime": "text/x-python"
+      },
+      {
+        "path": "gestaltview-sidekick-starter/backend/app/providers/anthropic_provider.py",
+        "size_bytes": 2709,
+        "modified_utc": "2026-02-01T03:28:06.527333Z",
+        "sha256": "c929be5821c599a79be239de2ecf1df143ac7384fc8ad96e3c4d33d33da2a38e",
+        "ext": ".py",
+        "mime": "text/x-python"
+      },
+      {
+        "path": "gestaltview-sidekick-starter/backend/app/providers/google_provider.py",
+        "size_bytes": 3350,
+        "modified_utc": "2026-02-01T03:28:06.527585Z",
+        "sha256": "0d166d11eb87bec5e4e50a068a3e6643062eafed67ab5c2a3813c2a74c34d1c5",
+        "ext": ".py",
+        "mime": "text/x-python"
+      },
+      {
+        "path": "gestaltview-sidekick-starter/backend/app/providers/stubs.py",
+        "size_bytes": 592,
+        "modified_utc": "2026-02-01T03:28:06.527942Z",
+        "sha256": "63afaf3a71883cf0a39f17d195eb7702d380018696b6ca76070033727236c1dc",
+        "ext": ".py",
+        "mime": "text/x-python"
+      },
+      {
+        "path": "gestaltview-sidekick-starter/backend/app/services/context_ingestion.py",
+        "size_bytes": 8567,
+        "modified_utc": "2026-02-01T03:28:06.528394Z",
+        "sha256": "40f7f3646a066bc3ac4df634b0749b0b6aa132e19662f7a9a27c5d5af24cf46c",
+        "ext": ".py",
+        "mime": "text/x-python"
+      },
+      {
+        "path": "gestaltview-sidekick-starter/backend/app/services/metaphor_detector.txt",
+        "size_bytes": 9444,
+        "modified_utc": "2026-02-01T03:28:06.528698Z",
+        "sha256": "3f0b31fa2acc2f5fb9cb44cbce4aca4810d67754041bcbfc3cd74263ca8786ba",
+        "ext": ".txt",
+        "mime": "text/plain"
+      },
+      {
+        "path": "gestaltview-sidekick-starter/backend/app/services/billy_runtime.py",
+        "size_bytes": 1009,
+        "modified_utc": "2026-02-01T03:28:06.528880Z",
+        "sha256": "abead59e549ff23ee4afe3036951ab9cad0a81cb975073cf55e6ee8da94b6b5e",
+        "ext": ".py",
+        "mime": "text/x-python"
+      },
+      {
+        "path": "gestaltview-sidekick-starter/backend/app/services/sidekick_customizer.py",
+        "size_bytes": 3771,
+        "modified_utc": "2026-02-01T03:28:06.529272Z",
+        "sha256": "81608e5a74899cdd507df5f4220e35bf24fd9ac0c2abd8cbae66f3588890e22d",
+        "ext": ".py",
+        "mime": "text/x-python"
+      },
+      {
+        "path": "gestaltview-sidekick-starter/backend/app/services/InnerWorldsOS.tsx",
+        "size_bytes": 30697,
+        "modified_utc": "2026-02-01T03:28:06.529773Z",
+        "sha256": "c6fe708ca6a49b4a589f7489c31be027c56a6ee753f556be55b42a1998131275",
+        "ext": ".tsx",
+        "mime": "application/octet-stream"
+      },
+      {
+        "path": "gestaltview-sidekick-starter/backend/app/services/context_weaver.py",
+        "size_bytes": 25361,
+        "modified_utc": "2026-02-01T03:28:06.530729Z",
+        "sha256": "922c98e6f5146439d7bc658f5a63e4237be556481d9359e6f97828c44ed886bd",
+        "ext": ".py",
+        "mime": "text/x-python"
+      },
+      {
+        "path": "gestaltview-sidekick-starter/backend/app/services/checkpoint-implementations.py",
+        "size_bytes": 24396,
+        "modified_utc": "2026-02-01T03:28:06.531641Z",
+        "sha256": "9deafe0e46bc940e42d30c4998004872975ba1ab50db6afd3bdf81243e8914bb",
+        "ext": ".py",
+        "mime": "text/x-python"
+      },
+      {
+        "path": "gestaltview-sidekick-starter/backend/app/services/feedback.py",
+        "size_bytes": 5505,
+        "modified_utc": "2026-02-01T03:28:06.532155Z",
+        "sha256": "e8047b9fb202ab0d1797ae7c6e81b52731105d3a4a137bc5abc8beabb82b12be",
+        "ext": ".py",
+        "mime": "text/x-python"
+      },
+      {
+        "path": "gestaltview-sidekick-starter/backend/app/services/ultimate_creation_corner_v2.tsx",
+        "size_bytes": 8860,
+        "modified_utc": "2026-02-01T03:28:06.532648Z",
+        "sha256": "fcb4c9d18c9dd8acf1b109f4562642c7a10d1c4e1732e6ab9966a30c96f05029",
+        "ext": ".tsx",
+        "mime": "application/octet-stream"
+      },
+      {
+        "path": "gestaltview-sidekick-starter/backend/app/services/emotions.py",
+        "size_bytes": 1545,
+        "modified_utc": "2026-02-01T03:28:06.533251Z",
+        "sha256": "7dc7da173cb502588ceefbfb3acfa4482e0f526cdbe6fd545f0fc18f1f4bb159",
+        "ext": ".py",
+        "mime": "text/x-python"
+      },
+      {
+        "path": "gestaltview-sidekick-starter/backend/app/services/enhanced_csi_nexus_v3.py",
+        "size_bytes": 4310,
+        "modified_utc": "2026-02-01T03:28:06.533772Z",
+        "sha256": "9335fc1fe906fca464e9d73b02b159aa62a5afaa8dbd9ad83a3a46dacd91de0e",
+        "ext": ".py",
+        "mime": "text/x-python"
+      },
+      {
+        "path": "gestaltview-sidekick-starter/backend/app/services/CreationCorner.tsx",
+        "size_bytes": 10738,
+        "modified_utc": "2026-02-01T03:28:06.534326Z",
+        "sha256": "3b52ac469379ee2118550f2b4cf36db6d27f4d6fb74001a891ea02a1e68816cd",
+        "ext": ".tsx",
+        "mime": "application/octet-stream"
+      },
+      {
+        "path": "gestaltview-sidekick-starter/backend/app/services/chat.py",
+        "size_bytes": 5516,
+        "modified_utc": "2026-02-01T03:28:06.534710Z",
+        "sha256": "c47a5ca35b26d3a5cf5a5e40c699885d9b60155cb18abdcc8300631a7a05e9da",
+        "ext": ".py",
+        "mime": "text/x-python"
+      },
+      {
+        "path": "gestaltview-sidekick-starter/backend/app/services/UserProfile.json",
+        "size_bytes": 5338,
+        "modified_utc": "2026-02-01T03:28:06.535363Z",
+        "sha256": "cf7affa0c67c07921322a2670c26890f602582391c8bc657e3e57b4f2473636b",
+        "ext": ".json",
+        "mime": "application/json"
+      },
+      {
+        "path": "gestaltview-sidekick-starter/backend/app/services/AlwaysOnProfileCycle.py",
+        "size_bytes": 1473,
+        "modified_utc": "2026-02-01T03:28:06.535720Z",
+        "sha256": "4b4f77909c39eda3e6840f299735b62cb036ecaa260de317e4b7b6709bffbb7e",
+        "ext": ".py",
+        "mime": "text/x-python"
+      },
+      {
+        "path": "gestaltview-sidekick-starter/backend/app/services/OperationalizeMetaphor(OPM).py",
+        "size_bytes": 3218,
+        "modified_utc": "2026-02-01T03:28:06.536129Z",
+        "sha256": "d91327c6f8e84ee12709cdfd4005fbf32a8a733409a9b9fc4cb0e78d25578743",
+        "ext": ".py",
+        "mime": "text/x-python"
+      },
+      {
+        "path": "gestaltview-sidekick-starter/backend/app/services/gestaltview_checkpoint_framework.json",
+        "size_bytes": 4384,
+        "modified_utc": "2026-02-01T03:28:06.536501Z",
+        "sha256": "030811a7877a31d28906ac94060569501224347f49a3ef3b8e3df33c5076aa7b",
+        "ext": ".json",
+        "mime": "application/json"
+      },
+      {
+        "path": "gestaltview-sidekick-starter/backend/app/services/billy_engine.py",
+        "size_bytes": 3788,
+        "modified_utc": "2026-02-01T03:28:06.537044Z",
+        "sha256": "62bc050e4495f902d8d00cfa1c0528da14f85f93d86ddb13ee97d2d5c482e819",
+        "ext": ".py",
+        "mime": "text/x-python"
+      },
+      {
+        "path": "gestaltview-sidekick-starter/backend/app/services/manifest_index.py",
+        "size_bytes": 1895,
+        "modified_utc": "2026-02-01T03:28:06.537437Z",
+        "sha256": "9c3ccafa1f7c5b5efa891c23bc5c42a44e64f084528343e00f30a927d199d3f1",
+        "ext": ".py",
+        "mime": "text/x-python"
+      },
+      {
+        "path": "gestaltview-sidekick-starter/backend/app/services/gestaltview_recursive_engine_v2.ts",
+        "size_bytes": 2388,
+        "modified_utc": "2026-02-01T03:28:06.537661Z",
+        "sha256": "0e7409fda142ae79cc260ad28f19006b4709b1fb37c7ddf8aebf44b71622b9b6",
+        "ext": ".ts",
+        "mime": "text/vnd.trolltech.linguist"
+      },
+      {
+        "path": "gestaltview-sidekick-starter/backend/app/services/ethical_framework.py",
+        "size_bytes": 2252,
+        "modified_utc": "2026-02-01T03:28:06.537818Z",
+        "sha256": "ff2c9767c7af8928e03085cfd13269a1b82f476c0a957bc2f9525de71b10705e",
+        "ext": ".py",
+        "mime": "text/x-python"
+      },
+      {
+        "path": "gestaltview-sidekick-starter/backend/app/services/fusion_engine.py",
+        "size_bytes": 14604,
+        "modified_utc": "2026-02-01T03:28:06.538152Z",
+        "sha256": "a8b2d9f9955e7aa2858d1a7a22db083f7999bc7c1cc626d7e52f3fcb0b52df87",
+        "ext": ".py",
+        "mime": "text/x-python"
+      },
+      {
+        "path": "gestaltview-sidekick-starter/backend/app/services/main.py",
+        "size_bytes": 16269,
+        "modified_utc": "2026-02-01T03:28:06.538725Z",
+        "sha256": "fac8e2a7c7d29d8e5c9bca8ccdb057657558b6ba68c52396e8aeb527821183ee",
+        "ext": ".py",
+        "mime": "text/x-python"
+      },
+      {
+        "path": "gestaltview-sidekick-starter/backend/app/services/CreationCornerModal.tsx",
+        "size_bytes": 3595,
+        "modified_utc": "2026-02-01T03:28:06.539079Z",
+        "sha256": "7cfc66220b9d78e7a1d861fd95345a6f020708e0fe7c819f23474d04cba764e7",
+        "ext": ".tsx",
+        "mime": "application/octet-stream"
+      },
+      {
+        "path": "gestaltview-sidekick-starter/backend/app/services/db.py",
+        "size_bytes": 17084,
+        "modified_utc": "2026-02-01T03:28:06.539609Z",
+        "sha256": "d8720d04c5824ac75936e1e11bc5d9374943afb6cc3a6903d8a5f9176cc85fec",
+        "ext": ".py",
+        "mime": "text/x-python"
+      },
+      {
+        "path": "gestaltview-sidekick-starter/backend/app/services/GestaltView Manifest Index Layer.py",
+        "size_bytes": 47307,
+        "modified_utc": "2026-02-01T03:28:06.540498Z",
+        "sha256": "d88ceb02e1d183d23fd860229f85954c3eb694c8cdfe55cd42b229cc76749a65",
+        "ext": ".py",
+        "mime": "text/x-python"
+      },
+      {
+        "path": "gestaltview-sidekick-starter/backend/app/services/gestaltview_musical_dna_engine_v2.py",
+        "size_bytes": 4125,
+        "modified_utc": "2026-02-01T03:28:06.540853Z",
+        "sha256": "298f9ca44c19d4ae3a0cf6eea5a8079bbdce794ad99975ec5f01bf07617c1160",
+        "ext": ".py",
+        "mime": "text/x-python"
+      },
+      {
+        "path": "gestaltview-sidekick-starter/backend/app/services/gestaltview-synthesis-checkpoint.md",
+        "size_bytes": 11690,
+        "modified_utc": "2026-02-01T03:28:06.541257Z",
+        "sha256": "a8b724ad662bdf2896a746c94c9ee1f5b867807d4698fa34dd530b7d27f6acd1",
+        "ext": ".md",
+        "mime": "text/markdown"
+      },
+      {
+        "path": "gestaltview-sidekick-starter/backend/app/services/core-creation-engine.py",
+        "size_bytes": 11724,
+        "modified_utc": "2026-02-01T03:28:06.541765Z",
+        "sha256": "ec44e55039aced6920d0a32e865687d0f17730208e09958968a3a3b376e2ade1",
+        "ext": ".py",
+        "mime": "text/x-python"
+      },
+      {
+        "path": "gestaltview-sidekick-starter/backend/app/services/Context-Establishment.json",
+        "size_bytes": 8576,
+        "modified_utc": "2026-02-01T03:28:06.542159Z",
+        "sha256": "5e1462f3b2ca0252d189d79fe2c899cd8d7e2cc6c86227b911483bf40ac3e5a9",
+        "ext": ".json",
+        "mime": "application/json"
+      },
+      {
+        "path": "gestaltview-sidekick-starter/backend/app/services/sidekick_deployment.py",
+        "size_bytes": 1893,
+        "modified_utc": "2026-02-01T03:28:06.542558Z",
+        "sha256": "1d749c1e3527047e18bc43b0a24f310c3fc897f0c53c94dfdcfff0dbeef7d9dd",
+        "ext": ".py",
+        "mime": "text/x-python"
+      },
+      {
+        "path": "gestaltview-sidekick-starter/backend/app/services/adhd-friendly.css",
+        "size_bytes": 1128,
+        "modified_utc": "2026-02-01T03:28:06.542996Z",
+        "sha256": "9caf03ae12d7e5e50c5bb036ba4977f92b8783c32f6171db1b5b80e7c3260a07",
+        "ext": ".css",
+        "mime": "text/css"
+      },
+      {
+        "path": "gestaltview-sidekick-starter/backend/app/services/loom_orchestrator.py",
+        "size_bytes": 6553,
+        "modified_utc": "2026-02-01T03:28:06.543280Z",
+        "sha256": "9699a22b170830f49093b9ce40fb962453e6c94ac1c22b747d8abfa304d17014",
+        "ext": ".py",
+        "mime": "text/x-python"
+      },
+      {
+        "path": "gestaltview-sidekick-starter/backend/app/services/session.py",
+        "size_bytes": 3608,
+        "modified_utc": "2026-02-01T03:28:06.543655Z",
+        "sha256": "2c0e5413dcef088ff5d0bd2613142bb7b582bb64e6f35e500da2620a11141fc6",
+        "ext": ".py",
+        "mime": "text/x-python"
+      },
+      {
+        "path": "gestaltview-sidekick-starter/backend/app/services/ai_orchestrator.py",
+        "size_bytes": 10629,
+        "modified_utc": "2026-02-01T03:28:06.544448Z",
+        "sha256": "5a576b92ca93f62f70b55e2bddf70a9f28c78515a8faec9f14bd1588c3798cd2",
+        "ext": ".py",
+        "mime": "text/x-python"
+      },
+      {
+        "path": "gestaltview-sidekick-starter/backend/app/services/EnhancedMainInterface.tsx",
+        "size_bytes": 17143,
+        "modified_utc": "2026-02-01T03:28:06.545175Z",
+        "sha256": "33b3fcd19e92528579b642b155cc2ef01b592021e932ae5ab55e6c63c5c7e12a",
+        "ext": ".tsx",
+        "mime": "application/octet-stream"
+      },
+      {
+        "path": "gestaltview-sidekick-starter/backend/app/services/ConsciousnessTracker.tsx",
+        "size_bytes": 9670,
+        "modified_utc": "2026-02-01T03:28:06.545806Z",
+        "sha256": "ac98ea041378a21d79dab0672d0377bcd37b1891f9e828b5637eb7e662b9060e",
+        "ext": ".tsx",
+        "mime": "application/octet-stream"
+      },
+      {
+        "path": "gestaltview-sidekick-starter/backend/app/services/gestalt_core.py",
+        "size_bytes": 35797,
+        "modified_utc": "2026-02-01T03:28:06.546475Z",
+        "sha256": "9bb5bb9040045918a367916d7eeaeb8d167b73e38e50429f8cb189b730151d10",
+        "ext": ".py",
+        "mime": "text/x-python"
+      },
+      {
+        "path": "gestaltview-sidekick-starter/backend/app/services/multi_modal_processor.py",
+        "size_bytes": 845,
+        "modified_utc": "2026-02-01T03:28:06.546946Z",
+        "sha256": "1f39741c404f67f2f6d34060501dc8a1534d8b7171aed81a002892788c409744",
+        "ext": ".py",
+        "mime": "text/x-python"
+      },
+      {
+        "path": "gestaltview-sidekick-starter/backend/app/services/human_ai_bridge_v2.py-# Ultimate Human-AI Bridge v2.0.py",
+        "size_bytes": 9309,
+        "modified_utc": "2026-02-01T03:28:06.547341Z",
+        "sha256": "2149c69116c929cd2400d05d3697b51b96ba10814b16d1361128aa8ef243c073",
+        "ext": ".py",
+        "mime": "text/x-python"
+      },
+      {
+        "path": "gestaltview-sidekick-starter/backend/app/services/neural-aurora.css",
+        "size_bytes": 37760,
+        "modified_utc": "2026-02-01T03:28:06.548027Z",
+        "sha256": "812e645b2f1f9b027797b9df1b4fb1a09086564f5d5de9a1506d3b941fde2611",
+        "ext": ".css",
+        "mime": "text/css"
+      },
+      {
+        "path": "gestaltview-sidekick-starter/backend/app/services/gestaltview-complete-context.md",
+        "size_bytes": 7552,
+        "modified_utc": "2026-02-01T03:28:06.548720Z",
+        "sha256": "a0b2cd33a271ae245984839f629a8ec798e06527d7e68c6fb3d2cc83a2ef715b",
+        "ext": ".md",
+        "mime": "text/markdown"
+      },
+      {
+        "path": "gestaltview-sidekick-starter/backend/app/services/rpe.py",
+        "size_bytes": 1308,
+        "modified_utc": "2026-02-01T03:28:06.549567Z",
+        "sha256": "364a2dc644bbd6b1ba6d6f300244e3eeae0003cf92c939562a3b15664f40f76f",
+        "ext": ".py",
+        "mime": "text/x-python"
+      },
+      {
+        "path": "gestaltview-sidekick-starter/backend/app/utils/__init__.py",
+        "size_bytes": 419,
+        "modified_utc": "2026-02-01T03:28:06.551742Z",
+        "sha256": "69a2499b7e4fc35e02b96de9c5f4cf0fb1c45f582ce35ad36fd36c49c3a32f2c",
+        "ext": ".py",
+        "mime": "text/x-python"
+      },
+      {
+        "path": "gestaltview-sidekick-starter/backend/app/utils/prompt_templates_enhanced.py",
+        "size_bytes": 18498,
+        "modified_utc": "2026-02-01T03:28:06.552122Z",
+        "sha256": "a94580f99f770cc7396e20c5eca70876f6ffe04d156b0f8a1bf8a7e73e9a8656",
+        "ext": ".py",
+        "mime": "text/x-python"
+      },
+      {
+        "path": "gestaltview-sidekick-starter/backend/app/utils/gestaltview_seed.py",
+        "size_bytes": 7347,
+        "modified_utc": "2026-02-01T03:28:06.554363Z",
+        "sha256": "d5fed5f1d4505b839de0cb701ffc0d2da4cbb9f1f0714a28f4db49561ad0ed82",
+        "ext": ".py",
+        "mime": "text/x-python"
+      },
+      {
+        "path": "gestaltview-sidekick-starter/scripts/cli.py",
+        "size_bytes": 1518,
+        "modified_utc": "2026-02-01T03:28:06.556512Z",
+        "sha256": "7f1aac7423bf2a21c27b6454f59639dfc5b9b2720cf1969c129951880351da43",
+        "ext": ".py",
+        "mime": "text/x-python"
+      },
+      {
+        "path": "gestaltview-sidekick-starter/scripts/docker-build.sh",
+        "size_bytes": 199,
+        "modified_utc": "2026-02-01T03:28:06.556688Z",
+        "sha256": "0999d4671d7baa78c53d82f4af93b6ad6c3b4460170a780298789c5de2bcb61b",
+        "ext": ".sh",
+        "mime": "text/x-sh"
+      },
+      {
+        "path": "gestaltview-sidekick-starter/scripts/docker-down.sh",
+        "size_bytes": 262,
+        "modified_utc": "2026-02-01T03:28:06.556838Z",
+        "sha256": "2fda55b0e075ed7bb5c3f173d045d6eb4ae8044383a47c560f2b54de3e76e60f",
+        "ext": ".sh",
+        "mime": "text/x-sh"
+      },
+      {
+        "path": "gestaltview-sidekick-starter/scripts/docker-up.sh",
+        "size_bytes": 230,
+        "modified_utc": "2026-02-01T03:28:06.557059Z",
+        "sha256": "b6bc61958a58fd7b1b115fd84573c190f6c4ae8e2ac3ece54321ed5be1e92036",
+        "ext": ".sh",
+        "mime": "text/x-sh"
+      },
+      {
+        "path": "gestaltview-sidekick-starter/scripts/docker-up-dev.sh",
+        "size_bytes": 244,
+        "modified_utc": "2026-02-01T03:28:06.557647Z",
+        "sha256": "7591cd26d691c125a19c32857069578ad0c0c32f9d9eb967c92e158f23a78bbd",
+        "ext": ".sh",
+        "mime": "text/x-sh"
+      },
+      {
+        "path": "gestaltview-sidekick-starter/scripts/docker-logs.sh",
+        "size_bytes": 251,
+        "modified_utc": "2026-02-01T03:28:06.557885Z",
+        "sha256": "e9762537f193128f88bc673a6290ff7089a57e09c7ff4a71625ff7b33d6230b6",
+        "ext": ".sh",
+        "mime": "text/x-sh"
+      },
+      {
+        "path": ".vscode/settings.json",
+        "size_bytes": 92,
+        "modified_utc": "2026-02-01T03:28:06.558379Z",
+        "sha256": "390538bdee83bed9900966120403258214e787027149134d1d63bf81574f8645",
+        "ext": ".json",
+        "mime": "application/json"
+      },
+      {
+        "path": "skills/dist/gestaltview-billy-backend-agent.skill",
+        "size_bytes": 2745,
+        "modified_utc": "2026-02-01T03:28:07.054279Z",
+        "sha256": "a315e4543b2275883bf49809306af8eccc1cc3cfe4a03d80f921a261d1f7b4fc",
+        "ext": ".skill",
+        "mime": "application/octet-stream"
+      },
+      {
+        "path": "skills/gestaltview-billy-backend-agent/SKILL.md",
+        "size_bytes": 2970,
+        "modified_utc": "2026-02-01T03:28:07.054634Z",
+        "sha256": "8dc1247d064f2d9e86068a78eeba5d1bdba8e9d5a8ed4fe6a571fcf8f83dcc68",
+        "ext": ".md",
+        "mime": "text/markdown"
+      },
+      {
+        "path": "skills/gestaltview-billy-backend-agent/references/billy-backend-sources.md",
+        "size_bytes": 2323,
+        "modified_utc": "2026-02-01T03:28:07.054919Z",
+        "sha256": "6dbd80b3e373da47fc3839117562dff4fdae6bff99b6b32e95a9268d97ee899f",
+        "ext": ".md",
+        "mime": "text/markdown"
+      },
+      {
+        "path": "exports/repo-snapshot-20260130-124625.md",
+        "size_bytes": 665945,
+        "modified_utc": "2026-02-01T03:28:07.061054Z",
+        "sha256": "5f56df86bd651724311a5d3536cb21de1cd5d95a5cabcb05582e42347a5194b7",
+        "ext": ".md",
+        "mime": "text/markdown"
+      }
+    ]
+  },
+  "keyword_index": {
+    "note": "Lightweight keyword->path index derived from file paths. For semantic search, use the Manifest Index Layer outputs.",
+    "keywords": {
+      "# ultimate human": [
+        "gestaltview-sidekick-starter/backend/app/services/human_ai_bridge_v2.py-# Ultimate Human-AI Bridge v2.0.py"
+      ],
+      "124625": [
+        "exports/repo-snapshot-20260130-124625.md"
+      ],
+      "20260130": [
+        "exports/repo-snapshot-20260130-124625.md"
+      ],
+      "25#u25cf#u25cb#u00b0`": [
+        "gestaltview-sidekick-starter/.github/`#U2022#U25cb#U25cfBilly_11_18_25#U25cf#U25cb#U00b0`.txt"
+      ],
+      "`#u2022#u25cb#u25cfbilly": [
+        "gestaltview-sidekick-starter/.github/`#U2022#U25cb#U25cfBilly_11_18_25#U25cf#U25cb#U00b0`.txt"
+      ],
+      "adhd": [
+        "gestaltview-sidekick-starter/backend/app/services/adhd-friendly.css"
+      ],
+      "agent": [
+        "gestaltview-sidekick-starter/backend/app/billy_agent.py",
+        "skills/dist/gestaltview-billy-backend-agent.skill",
+        "skills/gestaltview-billy-backend-agent/SKILL.md",
+        "skills/gestaltview-billy-backend-agent/references/billy-backend-sources.md"
+      ],
+      "ai bridge v2": [
+        "gestaltview-sidekick-starter/backend/app/services/human_ai_bridge_v2.py-# Ultimate Human-AI Bridge v2.0.py"
+      ],
+      "alwaysonprofilecycle": [
+        "gestaltview-sidekick-starter/backend/app/services/AlwaysOnProfileCycle.py"
+      ],
+      "anthropic": [
+        "gestaltview-sidekick-starter/backend/app/providers/anthropic_provider.py"
+      ],
+      "api": [
+        "gestaltview-sidekick-starter/frontend/src/components/api.ts"
+      ],
+      "appheader": [
+        "gestaltview-sidekick-starter/frontend/src/components/AppHeader.tsx"
+      ],
+      "aurora": [
+        "gestaltview-sidekick-starter/backend/app/services/neural-aurora.css"
+      ],
+      "base": [
+        "gestaltview-sidekick-starter/backend/app/providers/base.py"
+      ],
+      "billy": [
+        "gestaltview-sidekick-starter/backend/app/billy_agent.py",
+        "gestaltview-sidekick-starter/backend/app/services/billy_engine.py",
+        "gestaltview-sidekick-starter/backend/app/services/billy_runtime.py",
+        "skills/dist/gestaltview-billy-backend-agent.skill",
+        "skills/gestaltview-billy-backend-agent/SKILL.md",
+        "skills/gestaltview-billy-backend-agent/references/billy-backend-sources.md"
+      ],
+      "bridge": [
+        "gestaltview-sidekick-starter/backend/app/services/human_ai_bridge_v2.py-# Ultimate Human-AI Bridge v2.0.py"
+      ],
+      "build": [
+        "gestaltview-sidekick-starter/scripts/docker-build.sh"
+      ],
+      "chat": [
+        "gestaltview-sidekick-starter/backend/app/services/chat.py"
+      ],
+      "chatpanel": [
+        "gestaltview-sidekick-starter/frontend/src/components/ChatPanel.tsx"
+      ],
+      "checkpoint": [
+        "gestaltview-sidekick-starter/backend/app/services/checkpoint-implementations.py",
+        "gestaltview-sidekick-starter/backend/app/services/gestaltview-synthesis-checkpoint.md",
+        "gestaltview-sidekick-starter/backend/app/services/gestaltview_checkpoint_framework.json"
+      ],
+      "cli": [
+        "gestaltview-sidekick-starter/scripts/cli.py"
+      ],
+      "client": [
+        "gestaltview-sidekick-starter/client/README_CLIENT.md",
+        "gestaltview-sidekick-starter/client/docker-compose.yml"
+      ],
+      "codex": [
+        "gestaltview-sidekick-starter/backend/app/gestaltview_codex.md"
+      ],
+      "codexagent": [
+        "CodexAgent.md"
+      ],
+      "collaborator": [
+        "gestaltview-sidekick-starter/legacy/custom_ai_collaborator_enhanced.py"
+      ],
+      "complete": [
+        "gestaltview-sidekick-starter/backend/app/services/gestaltview-complete-context.md"
+      ],
+      "components": [
+        "gestaltview-sidekick-starter/frontend/app/components/creation_corner.tsx",
+        "gestaltview-sidekick-starter/frontend/src/components/AppHeader.tsx",
+        "gestaltview-sidekick-starter/frontend/src/components/ChatPanel.tsx",
+        "gestaltview-sidekick-starter/frontend/src/components/ProviderSettings.tsx",
+        "gestaltview-sidekick-starter/frontend/src/components/SidekickBuilder.tsx",
+        "gestaltview-sidekick-starter/frontend/src/components/SuiteStatus.tsx",
+        "gestaltview-sidekick-starter/frontend/src/components/WorkspaceOverview.tsx",
+        "gestaltview-sidekick-starter/frontend/src/components/api.ts",
+        "gestaltview-sidekick-starter/frontend/src/components/types.ts"
+      ],
+      "compose": [
+        "gestaltview-sidekick-starter/client/docker-compose.yml",
+        "gestaltview-sidekick-starter/docker-compose.dev.yml",
+        "gestaltview-sidekick-starter/docker-compose.yml"
+      ],
+      "config": [
+        "gestaltview-sidekick-starter/frontend/vite.config.ts"
+      ],
+      "consciousnesstracker": [
+        "gestaltview-sidekick-starter/backend/app/services/ConsciousnessTracker.tsx"
+      ],
+      "context": [
+        "gestaltview-sidekick-starter/backend/app/context_ingestion.py",
+        "gestaltview-sidekick-starter/backend/app/context_sources.py",
+        "gestaltview-sidekick-starter/backend/app/services/Context-Establishment.json",
+        "gestaltview-sidekick-starter/backend/app/services/context_ingestion.py",
+        "gestaltview-sidekick-starter/backend/app/services/context_weaver.py",
+        "gestaltview-sidekick-starter/backend/app/services/gestaltview-complete-context.md"
+      ],
+      "core": [
+        "gestaltview-sidekick-starter/backend/app/services/core-creation-engine.py",
+        "gestaltview-sidekick-starter/backend/app/services/gestalt_core.py"
+      ],
+      "corner": [
+        "gestaltview-sidekick-starter/backend/app/services/ultimate_creation_corner_v2.tsx",
+        "gestaltview-sidekick-starter/frontend/app/components/creation_corner.tsx"
+      ],
+      "creation": [
+        "gestaltview-sidekick-starter/backend/app/services/core-creation-engine.py",
+        "gestaltview-sidekick-starter/backend/app/services/ultimate_creation_corner_v2.tsx",
+        "gestaltview-sidekick-starter/frontend/app/components/creation_corner.tsx"
+      ],
+      "creationcorner": [
+        "gestaltview-sidekick-starter/backend/app/services/CreationCorner.tsx"
+      ],
+      "creationcornermodal": [
+        "gestaltview-sidekick-starter/backend/app/services/CreationCornerModal.tsx"
+      ],
+      "csi": [
+        "gestaltview-sidekick-starter/backend/app/services/enhanced_csi_nexus_v3.py"
+      ],
+      "css": [
+        "gestaltview-sidekick-starter/backend/app/services/adhd-friendly.css",
+        "gestaltview-sidekick-starter/backend/app/services/neural-aurora.css",
+        "gestaltview-sidekick-starter/frontend/src/styles/app.css",
+        "gestaltview-sidekick-starter/frontend/src/styles/globals.css"
+      ],
+      "custom": [
+        "gestaltview-sidekick-starter/legacy/custom_ai_collaborator_enhanced.py"
+      ],
+      "customizer": [
+        "gestaltview-sidekick-starter/backend/app/services/sidekick_customizer.py"
+      ],
+      "deployment": [
+        "gestaltview-sidekick-starter/backend/app/services/sidekick_deployment.py"
+      ],
+      "detector": [
+        "gestaltview-sidekick-starter/backend/app/services/metaphor_detector.txt"
+      ],
+      "dev": [
+        "gestaltview-sidekick-starter/docker-compose.dev.yml",
+        "gestaltview-sidekick-starter/scripts/docker-up-dev.sh"
+      ],
+      "dist": [
+        "skills/dist/gestaltview-billy-backend-agent.skill"
+      ],
+      "dna": [
+        "gestaltview-sidekick-starter/backend/app/services/gestaltview_musical_dna_engine_v2.py"
+      ],
+      "docker": [
+        "gestaltview-sidekick-starter/client/docker-compose.yml",
+        "gestaltview-sidekick-starter/docker-compose.dev.yml",
+        "gestaltview-sidekick-starter/docker-compose.yml",
+        "gestaltview-sidekick-starter/scripts/docker-build.sh",
+        "gestaltview-sidekick-starter/scripts/docker-down.sh",
+        "gestaltview-sidekick-starter/scripts/docker-logs.sh",
+        "gestaltview-sidekick-starter/scripts/docker-up-dev.sh",
+        "gestaltview-sidekick-starter/scripts/docker-up.sh"
+      ],
+      "dockerfile": [
+        "gestaltview-sidekick-starter/backend/Dockerfile",
+        "gestaltview-sidekick-starter/frontend/Dockerfile"
+      ],
+      "down": [
+        "gestaltview-sidekick-starter/scripts/docker-down.sh"
+      ],
+      "emotions": [
+        "gestaltview-sidekick-starter/backend/app/services/emotions.py"
+      ],
+      "engine": [
+        "gestaltview-sidekick-starter/backend/app/services/billy_engine.py",
+        "gestaltview-sidekick-starter/backend/app/services/core-creation-engine.py",
+        "gestaltview-sidekick-starter/backend/app/services/fusion_engine.py",
+        "gestaltview-sidekick-starter/backend/app/services/gestaltview_musical_dna_engine_v2.py",
+        "gestaltview-sidekick-starter/backend/app/services/gestaltview_recursive_engine_v2.ts"
+      ],
+      "enhanced": [
+        "gestaltview-sidekick-starter/backend/app/services/enhanced_csi_nexus_v3.py",
+        "gestaltview-sidekick-starter/backend/app/utils/prompt_templates_enhanced.py",
+        "gestaltview-sidekick-starter/legacy/README_ENHANCED.md",
+        "gestaltview-sidekick-starter/legacy/custom_ai_collaborator_enhanced.py",
+        "gestaltview-sidekick-starter/legacy/gestaltview_system_enhanced.py",
+        "gestaltview-sidekick-starter/legacy/gestaltview_system_enhanced_1.py",
+        "gestaltview-sidekick-starter/legacy/gestaltview_system_enhanced_2.py"
+      ],
+      "enhancedmaininterface": [
+        "gestaltview-sidekick-starter/backend/app/services/EnhancedMainInterface.tsx"
+      ],
+      "enhancements": [
+        "ENHANCEMENTS.md"
+      ],
+      "entrypoint": [
+        "gestaltview-sidekick-starter/backend/Dockerfile",
+        "gestaltview-sidekick-starter/backend/app/main.py",
+        "gestaltview-sidekick-starter/docker-compose.dev.yml",
+        "gestaltview-sidekick-starter/docker-compose.yml",
+        "gestaltview-sidekick-starter/frontend/Dockerfile",
+        "gestaltview-sidekick-starter/frontend/src/App.tsx",
+        "gestaltview-sidekick-starter/frontend/src/main.tsx"
+      ],
+      "establishment": [
+        "gestaltview-sidekick-starter/backend/app/services/Context-Establishment.json"
+      ],
+      "ethical": [
+        "gestaltview-sidekick-starter/backend/app/services/ethical_framework.py"
+      ],
+      "ethics": [
+        "gestaltview-sidekick-starter/backend/app/gestaltview_ethics.json"
+      ],
+      "exports": [
+        "exports/repo-snapshot-20260130-124625.md"
+      ],
+      "feedback": [
+        "gestaltview-sidekick-starter/backend/app/services/feedback.py"
+      ],
+      "framework": [
+        "gestaltview-sidekick-starter/backend/app/services/ethical_framework.py",
+        "gestaltview-sidekick-starter/backend/app/services/gestaltview_checkpoint_framework.json"
+      ],
+      "friendly": [
+        "gestaltview-sidekick-starter/backend/app/services/adhd-friendly.css"
+      ],
+      "frontend": [
+        "gestaltview-sidekick-starter/frontend/Dockerfile",
+        "gestaltview-sidekick-starter/frontend/app/components/creation_corner.tsx",
+        "gestaltview-sidekick-starter/frontend/index.html",
+        "gestaltview-sidekick-starter/frontend/package-lock.json",
+        "gestaltview-sidekick-starter/frontend/package.json",
+        "gestaltview-sidekick-starter/frontend/src/App.tsx",
+        "gestaltview-sidekick-starter/frontend/src/components/AppHeader.tsx",
+        "gestaltview-sidekick-starter/frontend/src/components/ChatPanel.tsx",
+        "gestaltview-sidekick-starter/frontend/src/components/ProviderSettings.tsx",
+        "gestaltview-sidekick-starter/frontend/src/components/SidekickBuilder.tsx",
+        "gestaltview-sidekick-starter/frontend/src/components/SuiteStatus.tsx",
+        "gestaltview-sidekick-starter/frontend/src/components/WorkspaceOverview.tsx",
+        "gestaltview-sidekick-starter/frontend/src/components/api.ts",
+        "gestaltview-sidekick-starter/frontend/src/components/types.ts",
+        "gestaltview-sidekick-starter/frontend/src/main.tsx",
+        "gestaltview-sidekick-starter/frontend/src/styles/app.css",
+        "gestaltview-sidekick-starter/frontend/src/styles/globals.css",
+        "gestaltview-sidekick-starter/frontend/tsconfig.json",
+        "gestaltview-sidekick-starter/frontend/vite.config.ts"
+      ],
+      "fusion": [
+        "gestaltview-sidekick-starter/backend/app/services/fusion_engine.py"
+      ],
+      "gestalt": [
+        "gestaltview-sidekick-starter/backend/app/services/gestalt_core.py"
+      ],
+      "gestaltview manifest index layer": [
+        "gestaltview-sidekick-starter/backend/app/services/GestaltView Manifest Index Layer.py"
+      ],
+      "github": [
+        "gestaltview-sidekick-starter/.github/`#U2022#U25cb#U25cfBilly_11_18_25#U25cf#U25cb#U00b0`.txt",
+        "gestaltview-sidekick-starter/.github/gestaltview.py",
+        "gestaltview-sidekick-starter/.github/gestaltview_seed.py"
+      ],
+      "gitignore": [
+        "gestaltview-sidekick-starter/.gitignore"
+      ],
+      "globals": [
+        "gestaltview-sidekick-starter/frontend/src/styles/globals.css"
+      ],
+      "google": [
+        "gestaltview-sidekick-starter/backend/app/providers/google_provider.py"
+      ],
+      "guide": [
+        "gestaltview-sidekick-starter/legacy/MIGRATION_GUIDE.md"
+      ],
+      "html": [
+        "gestaltview-sidekick-starter/frontend/index.html"
+      ],
+      "huggingface": [
+        "gestaltview-sidekick-starter/backend/app/providers/huggingface_provider.py"
+      ],
+      "human": [
+        "gestaltview-sidekick-starter/backend/app/services/human_ai_bridge_v2.py-# Ultimate Human-AI Bridge v2.0.py"
+      ],
+      "implementations": [
+        "gestaltview-sidekick-starter/backend/app/services/checkpoint-implementations.py"
+      ],
+      "index": [
+        "gestaltview-sidekick-starter/backend/app/services/manifest_index.py",
+        "gestaltview-sidekick-starter/frontend/index.html"
+      ],
+      "ingestion": [
+        "gestaltview-sidekick-starter/backend/app/context_ingestion.py",
+        "gestaltview-sidekick-starter/backend/app/services/context_ingestion.py"
+      ],
+      "init": [
+        "gestaltview-sidekick-starter/backend/app/__init__.py",
+        "gestaltview-sidekick-starter/backend/app/providers/__init__.py",
+        "gestaltview-sidekick-starter/backend/app/utils/__init__.py"
+      ],
+      "innerworldsos": [
+        "gestaltview-sidekick-starter/backend/app/services/InnerWorldsOS.tsx"
+      ],
+      "legacy": [
+        "gestaltview-sidekick-starter/legacy/MIGRATION_GUIDE.md",
+        "gestaltview-sidekick-starter/legacy/README_ENHANCED.md",
+        "gestaltview-sidekick-starter/legacy/custom_ai_collaborator_enhanced.py",
+        "gestaltview-sidekick-starter/legacy/gestaltview_system_enhanced.py",
+        "gestaltview-sidekick-starter/legacy/gestaltview_system_enhanced_1.py",
+        "gestaltview-sidekick-starter/legacy/gestaltview_system_enhanced_2.py"
+      ],
+      "license": [
+        "gestaltview-sidekick-starter/LICENSE"
+      ],
+      "logs": [
+        "gestaltview-sidekick-starter/scripts/docker-logs.sh"
+      ],
+      "loom": [
+        "gestaltview-sidekick-starter/backend/app/services/loom_orchestrator.py"
+      ],
+      "manifest": [
+        "gestaltview-sidekick-starter/backend/app/services/manifest_index.py"
+      ],
+      "markdown": [
+        "gestaltview-sidekick-starter/repo-to-markdown.py",
+        "gestaltview-sidekick-starter/repo-to-markdown.sh"
+      ],
+      "metaphor": [
+        "gestaltview-sidekick-starter/backend/app/services/metaphor_detector.txt"
+      ],
+      "migration": [
+        "gestaltview-sidekick-starter/legacy/MIGRATION_GUIDE.md"
+      ],
+      "modal": [
+        "gestaltview-sidekick-starter/backend/app/services/multi_modal_processor.py"
+      ],
+      "models": [
+        "gestaltview-sidekick-starter/backend/app/models.py"
+      ],
+      "multi": [
+        "gestaltview-sidekick-starter/backend/app/services/multi_modal_processor.py"
+      ],
+      "musical": [
+        "gestaltview-sidekick-starter/backend/app/services/gestaltview_musical_dna_engine_v2.py"
+      ],
+      "neural": [
+        "gestaltview-sidekick-starter/backend/app/services/neural-aurora.css"
+      ],
+      "nexus": [
+        "gestaltview-sidekick-starter/backend/app/services/enhanced_csi_nexus_v3.py"
+      ],
+      "openai": [
+        "gestaltview-sidekick-starter/backend/app/providers/openai_provider.py"
+      ],
+      "operationalizemetaphor(opm)": [
+        "gestaltview-sidekick-starter/backend/app/services/OperationalizeMetaphor(OPM).py"
+      ],
+      "orchestrator": [
+        "gestaltview-sidekick-starter/backend/app/services/ai_orchestrator.py",
+        "gestaltview-sidekick-starter/backend/app/services/loom_orchestrator.py"
+      ],
+      "package": [
+        "gestaltview-sidekick-starter/frontend/package-lock.json",
+        "gestaltview-sidekick-starter/frontend/package.json"
+      ],
+      "processor": [
+        "gestaltview-sidekick-starter/backend/app/services/multi_modal_processor.py"
+      ],
+      "prompt": [
+        "gestaltview-sidekick-starter/backend/app/utils/prompt_templates_enhanced.py"
+      ],
+      "provider": [
+        "gestaltview-sidekick-starter/backend/app/providers/anthropic_provider.py",
+        "gestaltview-sidekick-starter/backend/app/providers/google_provider.py",
+        "gestaltview-sidekick-starter/backend/app/providers/huggingface_provider.py",
+        "gestaltview-sidekick-starter/backend/app/providers/openai_provider.py"
+      ],
+      "providers": [
+        "gestaltview-sidekick-starter/backend/app/providers/__init__.py",
+        "gestaltview-sidekick-starter/backend/app/providers/anthropic_provider.py",
+        "gestaltview-sidekick-starter/backend/app/providers/base.py",
+        "gestaltview-sidekick-starter/backend/app/providers/google_provider.py",
+        "gestaltview-sidekick-starter/backend/app/providers/huggingface_provider.py",
+        "gestaltview-sidekick-starter/backend/app/providers/openai_provider.py",
+        "gestaltview-sidekick-starter/backend/app/providers/stubs.py"
+      ],
+      "providersettings": [
+        "gestaltview-sidekick-starter/frontend/src/components/ProviderSettings.tsx"
+      ],
+      "readme": [
+        "README.md",
+        "gestaltview-sidekick-starter/README.md",
+        "gestaltview-sidekick-starter/client/README_CLIENT.md",
+        "gestaltview-sidekick-starter/legacy/README_ENHANCED.md"
+      ],
+      "recursive": [
+        "gestaltview-sidekick-starter/backend/app/services/gestaltview_recursive_engine_v2.ts"
+      ],
+      "references": [
+        "skills/gestaltview-billy-backend-agent/references/billy-backend-sources.md"
+      ],
+      "repo": [
+        "exports/repo-snapshot-20260130-124625.md",
+        "gestaltview-sidekick-starter/repo-to-markdown.py",
+        "gestaltview-sidekick-starter/repo-to-markdown.sh"
+      ],
+      "requirements": [
+        "gestaltview-sidekick-starter/backend/requirements.txt"
+      ],
+      "rpe": [
+        "gestaltview-sidekick-starter/backend/app/services/rpe.py"
+      ],
+      "runtime": [
+        "gestaltview-sidekick-starter/backend/app/services/billy_runtime.py"
+      ],
+      "schema": [
+        "gestaltview-sidekick-starter/shared/sidekick_spec.schema.json"
+      ],
+      "scripts": [
+        "gestaltview-sidekick-starter/scripts/cli.py",
+        "gestaltview-sidekick-starter/scripts/docker-build.sh",
+        "gestaltview-sidekick-starter/scripts/docker-down.sh",
+        "gestaltview-sidekick-starter/scripts/docker-logs.sh",
+        "gestaltview-sidekick-starter/scripts/docker-up-dev.sh",
+        "gestaltview-sidekick-starter/scripts/docker-up.sh"
+      ],
+      "seed": [
+        "gestaltview-sidekick-starter/.github/gestaltview_seed.py",
+        "gestaltview-sidekick-starter/backend/app/utils/gestaltview_seed.py"
+      ],
+      "session": [
+        "gestaltview-sidekick-starter/backend/app/services/session.py"
+      ],
+      "settings": [
+        ".vscode/settings.json"
+      ],
+      "shared": [
+        "gestaltview-sidekick-starter/shared/sidekick_spec.schema.json"
+      ],
+      "sidekickbuilder": [
+        "gestaltview-sidekick-starter/frontend/src/components/SidekickBuilder.tsx"
+      ],
+      "skill": [
+        "skills/dist/gestaltview-billy-backend-agent.skill",
+        "skills/gestaltview-billy-backend-agent/SKILL.md"
+      ],
+      "skills": [
+        "skills/dist/gestaltview-billy-backend-agent.skill",
+        "skills/gestaltview-billy-backend-agent/SKILL.md",
+        "skills/gestaltview-billy-backend-agent/references/billy-backend-sources.md"
+      ],
+      "snapshot": [
+        "exports/repo-snapshot-20260130-124625.md"
+      ],
+      "sources": [
+        "gestaltview-sidekick-starter/backend/app/context_sources.py",
+        "skills/gestaltview-billy-backend-agent/references/billy-backend-sources.md"
+      ],
+      "storage": [
+        "gestaltview-sidekick-starter/backend/app/storage.py"
+      ],
+      "stubs": [
+        "gestaltview-sidekick-starter/backend/app/providers/stubs.py"
+      ],
+      "styles": [
+        "gestaltview-sidekick-starter/frontend/src/styles/app.css",
+        "gestaltview-sidekick-starter/frontend/src/styles/globals.css"
+      ],
+      "suitestatus": [
+        "gestaltview-sidekick-starter/frontend/src/components/SuiteStatus.tsx"
+      ],
+      "synthesis": [
+        "gestaltview-sidekick-starter/backend/app/services/gestaltview-synthesis-checkpoint.md"
+      ],
+      "system": [
+        "gestaltview-sidekick-starter/legacy/gestaltview_system_enhanced.py",
+        "gestaltview-sidekick-starter/legacy/gestaltview_system_enhanced_1.py",
+        "gestaltview-sidekick-starter/legacy/gestaltview_system_enhanced_2.py"
+      ],
+      "templates": [
+        "gestaltview-sidekick-starter/backend/app/utils/prompt_templates_enhanced.py"
+      ],
+      "tsconfig": [
+        "gestaltview-sidekick-starter/frontend/tsconfig.json"
+      ],
+      "txt": [
+        "gestaltview-sidekick-starter/.github/`#U2022#U25cb#U25cfBilly_11_18_25#U25cf#U25cb#U00b0`.txt",
+        "gestaltview-sidekick-starter/backend/app/services/metaphor_detector.txt",
+        "gestaltview-sidekick-starter/backend/requirements.txt"
+      ],
+      "types": [
+        "gestaltview-sidekick-starter/frontend/src/components/types.ts"
+      ],
+      "ultimate": [
+        "gestaltview-sidekick-starter/backend/app/services/ultimate_creation_corner_v2.tsx"
+      ],
+      "userprofile": [
+        "gestaltview-sidekick-starter/backend/app/services/UserProfile.json"
+      ],
+      "utils": [
+        "gestaltview-sidekick-starter/backend/app/utils/__init__.py",
+        "gestaltview-sidekick-starter/backend/app/utils/gestaltview_seed.py",
+        "gestaltview-sidekick-starter/backend/app/utils/prompt_templates_enhanced.py"
+      ],
+      "vite": [
+        "gestaltview-sidekick-starter/frontend/vite.config.ts"
+      ],
+      "vscode": [
+        ".vscode/settings.json"
+      ],
+      "weaver": [
+        "gestaltview-sidekick-starter/backend/app/services/context_weaver.py"
+      ],
+      "workspaceoverview": [
+        "gestaltview-sidekick-starter/frontend/src/components/WorkspaceOverview.tsx"
+      ]
+    }
+  }
+}
