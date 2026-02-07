@@ -1,0 +1,505 @@
+# GestaltView Creator Toolkit
+
+This repository contains a baseline knowledge synthesis pipeline inspired by the GestaltView platform.
+It is designed to help you ingest a corpus of documents, chunk them while preserving context, summarize them incrementally, enhance context via entity annotations and embeddings, weave knowledge into a graph, identify gaps and motifs, and produce corpus-level synthesis.
+
+## Directory Structure
+
+- `ingest/`: Parsers and ingestion utilities.
+  - `parsers/`: Format-specific parsers for PDF, Markdown, Jupyter notebooks, and plain text.
+  - `ingest.py`: High-level ingestion that discovers files, parses and chunks them.
+- `chunking/`: Text chunking logic and policies.
+- `manifest_index/`: Index building and summarization helpers.
+- `context_enhancer/`: Context enrichment utilities (salient point extraction, truncation, entity annotation, embeddings).
+- `context_weaver/`: Knowledge graph construction based on shared entities.
+- `loom_orchestrator/`: Gap and motif analysis to find missing topics and recurring motifs.
+- `snowball_synthesizer/`: Corpus-level synthesis via simple summarization.
+- `orchestration/`: Pipeline orchestration and configuration classes.
+- `utils/`: Shared utilities such as provenance logging and hashing.
+- `docs/`: Documentation and usage instructions.
+- `cli.py`: Command-line interface for end‑to‑end execution.
+
+## Usage
+
+1. Organize your corpus of documents (PDF, Markdown, plain text, or Jupyter notebooks) in a directory.
+2. Install any optional dependencies (e.g. `pdfminer.six` for PDF parsing, `nbformat` for notebook parsing).
+3. Run the pipeline via the CLI:
+
+```bash
+python cli.py --corpus /path/to/corpus --output output.json
+```
+
+This will produce a JSON file containing per-document summaries, a simple knowledge graph, gap/motif analysis results, and a corpus-level summary.
+
+> **Note:** The implementations in this toolkit are intentionally lightweight placeholders. Replace them with production-grade logic (e.g. language model calls for summarization, proper entity recognition, and vector embeddings) to suit your specific needs.
+
+"""
+Chunking utilities for GestaltView Creator Toolkit.
+Includes functions to split text into overlapping chunks preserving context.
+"""
+from typing import List
+
+def chunk_text(text: str, chunk_size: int, overlap: int = 0) -> List[str]:
+    """Split text into chunks of size chunk_size with overlap."""
+    if not text:
+        return []
+    if len(text) <= chunk_size:
+        return [text]
+    chunks: List[str] = []
+    start = 0
+    length = len(text)
+    while start < length:
+        end = start + chunk_size
+        chunks.append(text[start:end])
+        start = end - overlap
+    return chunks
+
+"""
+Command-line interface for the GestaltView Creator Toolkit.
+Allows running the pipeline on a corpus directory and writing results to a JSON file.
+"""
+import argparse
+import json
+
+from orchestration.config import Config
+from orchestration.pipeline import Pipeline
+
+def main():
+    parser = argparse.ArgumentParser(description="GestaltView Creator Toolkit CLI")
+    parser.add_argument('--corpus', type=str, required=True, help='Path to corpus directory')
+    parser.add_argument('--output', type=str, default='gv_output.json', help='Path to output JSON file')
+    args = parser.parse_args()
+
+    config = Config.from_env()
+    pipeline = Pipeline(config)
+    result = pipeline.run(args.corpus)
+
+    with open(args.output, 'w', encoding='utf-8') as f:
+        json.dump(result, f, indent=2)
+    print(f"Wrote pipeline results to {args.output}")
+
+if __name__ == '__main__':
+    main()
+
+"""
+Concept analyzer for GestaltView Creator Toolkit.
+Identifies the most common concepts across a collection of texts.
+"""
+from typing import List
+from collections import Counter
+
+def top_concepts(texts: List[str], n: int = 10) -> List[str]:
+    """Return the top n most frequent words across the input texts."""
+    words: List[str] = []
+    for t in texts:
+        words += [w.lower() for w in t.split()]
+    counter = Counter(words)
+    return [w for w, _ in counter.most_common(n)]
+
+"""
+Configuration definitions for GestaltView Creator Toolkit.
+Allows default values and environment-based overrides.
+"""
+from dataclasses import dataclass
+import os
+
+@dataclass
+class Config:
+    root_dir: str = "./corpus"
+    output_dir: str = "./outputs"
+    chunk_size: int = 2000
+    chunk_overlap: int = 200
+    summarization_points: int = 5
+
+    @classmethod
+    def from_env(cls):
+        """Create a Config object from environment variables."""
+        return cls(
+            root_dir=os.getenv('GV_ROOT_DIR', './corpus'),
+            output_dir=os.getenv('GV_OUTPUT_DIR', './outputs'),
+            chunk_size=int(os.getenv('GV_CHUNK_SIZE', 2000)),
+            chunk_overlap=int(os.getenv('GV_CHUNK_OVERLAP', 200)),
+            summarization_points=int(os.getenv('GV_SUMMARY_POINTS', 5)),
+        )
+
+"""
+Embedding provider stub for GestaltView Creator Toolkit.
+Generates pseudo-random embeddings using Python's random module.
+"""
+
+import random
+
+class EmbeddingProvider:
+    def __init__(self, dimension: int = 128, seed: int = 42):
+        self.dimension = dimension
+        self.seed = seed
+
+    def embed(self, text: str):
+        """Generate a pseudo-random embedding vector for the given text."""
+        random.seed(hash(text) ^ self.seed)
+        return [random.random() for _ in range(self.dimension)]
+
+"""
+Context enhancement utilities.
+Provides functions for extracting salient points, truncating text, and annotating entities.
+"""
+
+from typing import List
+import re
+
+def extract_salient_points(text: str, max_points: int = 5) -> List[str]:
+    """Return up to max_points non-empty lines from the text."""
+    lines = [l.strip() for l in text.split('\n') if l.strip()]
+    return lines[:max_points]
+
+def truncate_for_model(text: str, max_chars: int = 2000) -> str:
+    """Truncate a long text preserving the start and end sections."""
+    if len(text) <= max_chars:
+        return text
+    head = text[:max_chars // 2]
+    tail = text[-max_chars // 2:]
+    return head + '\n...\n' + tail
+
+def annotate_entities(text: str) -> List[str]:
+    """
+    Annotate entities in the given text.
+    This naive implementation returns capitalized words as entities.
+    """
+    tokens = re.findall(r'\b[A-Z][a-zA-Z0-9]+\b', text)
+    return list(set(tokens))
+
+"""
+Indexing utilities for GestaltView Creator Toolkit.
+Builds a simple heading index for markdown-like text.
+"""
+
+def build_index(text: str) -> dict:
+    """
+    Build a simple index mapping headings to their line numbers.
+    A heading is considered any line starting with one or more '#' characters.
+    """
+    index: dict = {}
+    lines = text.splitlines()
+    for i, line in enumerate(lines):
+        stripped = line.strip()
+        if stripped.startswith('#'):
+            heading = stripped.lstrip('#').strip()
+            index.setdefault(heading, []).append(i)
+    return index
+
+"""
+Ingestion module for GestaltView Creator Toolkit.
+Discovers supported documents in a directory, reads and chunks them, and returns structured objects.
+"""
+from dataclasses import dataclass
+from datetime import datetime
+import pathlib
+import uuid
+from typing import List, Optional
+
+from .parsers.pdf_parser import parse_pdf
+from .parsers.markdown_parser import parse_markdown
+from .parsers.ipynb_parser import parse_ipynb
+from .parsers.txt_parser import parse_txt
+from ..chunking.chunker import chunk_text
+from ..chunking.policies import DEFAULT_CHUNK_SIZE, DEFAULT_CHUNK_OVERLAP
+
+@dataclass
+class Document:
+    document_id: str
+    path: str
+    content: str
+    chunk_index: Optional[int] = None
+    total_chunks: Optional[int] = None
+    created_at: datetime = datetime.utcnow()
+
+class Ingestor:
+    """Discovers files in a corpus directory, parses and chunks them."""
+    def __init__(self, root: str, chunk_size: int = DEFAULT_CHUNK_SIZE, overlap: int = DEFAULT_CHUNK_OVERLAP):
+        self.root = pathlib.Path(root)
+        self.chunk_size = chunk_size
+        self.overlap = overlap
+        self.supported = {'.pdf', '.md', '.txt', '.ipynb'}
+
+    def _read_file(self, path: pathlib.Path) -> str:
+        suffix = path.suffix.lower()
+        if suffix == '.pdf':
+            return parse_pdf(str(path))
+        elif suffix == '.md':
+            return parse_markdown(str(path))
+        elif suffix == '.ipynb':
+            return parse_ipynb(str(path))
+        else:
+            return parse_txt(str(path))
+
+    def ingest(self) -> List[Document]:
+        docs: List[Document] = []
+        for path in sorted(self.root.rglob('*')):
+            if not path.is_file() or path.suffix.lower() not in self.supported:
+                continue
+            text = self._read_file(path)
+            if not text:
+                continue
+            chunks = chunk_text(text, self.chunk_size, self.overlap)
+            total = len(chunks)
+            for idx, chunk in enumerate(chunks):
+                doc = Document(
+                    document_id=str(uuid.uuid4()),
+                    path=str(path),
+                    content=chunk,
+                    chunk_index=idx if total > 1 else None,
+                    total_chunks=total if total > 1 else None,
+                    created_at=datetime.utcnow()
+                )
+                docs.append(doc)
+        return docs
+
+"""
+Jupyter Notebook parser for GestaltView Creator Toolkit.
+Converts .ipynb files to plain text by extracting markdown and code cells.
+Requires the nbformat package.
+"""
+try:
+    import nbformat
+except ImportError:
+    nbformat = None
+
+def parse_ipynb(path: str) -> str:
+    if nbformat is None:
+        raise ImportError("nbformat is not installed. Please install it to parse notebooks.")
+    with open(path, 'r', encoding='utf-8', errors='ignore') as f:
+        nb = nbformat.read(f, as_version=4)
+    texts = []
+    for cell in nb.get('cells', []):
+        cell_type = cell.get('cell_type')
+        if cell_type in ('markdown', 'code'):
+            source = cell.get('source', '')
+            if isinstance(source, list):
+                texts.append(''.join(source))
+            else:
+                texts.append(source)
+    return '\n\n'.join(texts)
+
+"""
+Linker utilities for GestaltView Creator Toolkit.
+"""
+from .weaver import KnowledgeGraph
+
+def link_documents(graph: KnowledgeGraph):
+    """Return the adjacency dictionary of the knowledge graph."""
+    return graph.edges
+
+"""
+Loom analysis for GestaltView Creator Toolkit.
+Performs simple motif and gap detection across document summaries.
+"""
+from typing import List, Dict
+from collections import Counter
+
+class LoomAnalysis:
+    def __init__(self):
+        self.motifs: List[str] = []
+        self.gaps: List[str] = []
+
+    def analyze(self, docs: List[str]) -> Dict[str, List[str]]:
+        """Identify motifs (frequent words) and gaps (rare words) in the given documents."""
+        words: List[str] = []
+        for doc in docs:
+            words.extend([w.lower() for w in doc.split()])
+        counter = Counter(words)
+        self.motifs = [w for w, c in counter.items() if c > 2]
+        self.gaps = [w for w, c in counter.items() if c == 1]
+        return {'motifs': self.motifs, 'gaps': self.gaps}
+
+"""
+Markdown parser for GestaltView Creator Toolkit.
+Reads a markdown (.md) file and returns its plain text.
+"""
+def parse_markdown(path: str) -> str:
+    with open(path, 'r', encoding='utf-8', errors='ignore') as f:
+        return f.read()
+
+"""
+Motif detection utilities for Loom module in GestaltView Creator Toolkit.
+"""
+from typing import List
+from collections import Counter
+
+def detect_motifs(texts: List[str], threshold: int = 3) -> List[str]:
+    """Return words that appear at least threshold times across all texts."""
+    words: List[str] = []
+    for t in texts:
+        words += t.split()
+    counter = Counter(words)
+    return [w for w, c in counter.items() if c >= threshold]
+
+"""
+PDF parser for GestaltView Creator Toolkit.
+Provides a function to extract text from PDF documents.
+
+If pdfminer.six is installed, uses it; otherwise raises an ImportError.
+"""
+try:
+    from pdfminer.high_level import extract_text
+except ImportError:
+    extract_text = None
+
+def parse_pdf(path: str) -> str:
+    """Extract text from a PDF file at the given path."""
+    if extract_text is None:
+        raise ImportError("pdfminer.six is not installed. Please install it to parse PDFs.")
+    try:
+        return extract_text(path)
+    except Exception:
+        # On failure return empty string
+        return ""
+
+"""
+GestaltView pipeline orchestrator.
+Runs the ingestion, summarization, weaving, and synthesis steps.
+"""
+from typing import Dict, List
+
+from ..ingest.ingest import Ingestor
+from ..manifest_index.summarizer import summarize_document
+from ..context_enhancer.enhancer import annotate_entities
+from ..context_weaver.weaver import KnowledgeGraph
+from ..loom_orchestrator.loom import LoomAnalysis
+from ..snowball_synthesizer.synthesizer import synthesize_corpus
+from .config import Config
+
+class Pipeline:
+    """Orchestrates the full knowledge synthesis workflow."""
+    def __init__(self, config: Config):
+        self.config = config
+
+    def run(self, corpus_dir: str) -> Dict[str, any]:
+        """Run the pipeline on the given corpus directory and return analysis results."""
+        ingestor = Ingestor(corpus_dir, chunk_size=self.config.chunk_size, overlap=self.config.chunk_overlap)
+        docs = ingestor.ingest()
+        texts: List[str] = [d.content for d in docs]
+
+        # Summarize each chunk
+        summaries: List[str] = [summarize_document(text, max_points=self.config.summarization_points) for text in texts]
+
+        # Build knowledge graph
+        graph = KnowledgeGraph()
+        for doc, summary in zip(docs, summaries):
+            entities = annotate_entities(summary)
+            graph.add_document(doc.document_id, entities)
+
+        # Perform Loom analysis
+        loom = LoomAnalysis()
+        analysis = loom.analyze(summaries)
+
+        # Synthesize corpus
+        corpus_summary: str = synthesize_corpus(texts, max_points=self.config.summarization_points)
+
+        return {
+            'document_count': len(docs),
+            'summaries': summaries,
+            'knowledge_graph': graph.edges,
+            'loom_analysis': analysis,
+            'corpus_summary': corpus_summary,
+        }
+
+"""
+Default chunking policies for GestaltView Creator Toolkit.
+"""
+DEFAULT_CHUNK_SIZE: int = 2000
+DEFAULT_CHUNK_OVERLAP: int = 200
+
+"""
+Provenance logger for GestaltView Creator Toolkit.
+Stores provenance entries as JSON lines.
+"""
+import json
+import uuid
+from datetime import datetime
+
+class ProvenanceLogger:
+    def __init__(self, path: str = "provenance.jsonl"):
+        self.path = path
+
+    def log(self, source_id: str, operation: str, detail: str):
+        """Append a provenance entry to the log file."""
+        entry = {
+            "id": str(uuid.uuid4()),
+            "timestamp": datetime.utcnow().isoformat(),
+            "source_id": source_id,
+            "operation": operation,
+            "detail": detail,
+        }
+        with open(self.path, 'a', encoding='utf-8') as f:
+            f.write(json.dumps(entry) + "\n")
+
+"""
+Summarization utilities for GestaltView Creator Toolkit.
+Provides simple summarization based on salient lines.
+"""
+from ..context_enhancer.enhancer import extract_salient_points
+
+def summarize_document(text: str, max_points: int = 5) -> str:
+    """Return a simple summary by extracting salient lines from the document."""
+    points = extract_salient_points(text, max_points=max_points)
+    return '\n'.join(points)
+
+"""
+Snowball synthesizer for GestaltView Creator Toolkit.
+Generates a corpus-level synthesis by summarizing each document and concatenating the results.
+"""
+from typing import List
+from ..manifest_index.summarizer import summarize_document
+
+def synthesize_corpus(docs: List[str], max_points: int = 5) -> str:
+    """Return a corpus-level summary by summarizing and concatenating each document."""
+    summaries: List[str] = [summarize_document(d, max_points=max_points) for d in docs]
+    return '\n\n'.join(summaries)
+
+"""
+Utility functions for GestaltView Creator Toolkit.
+Includes hashing and timestamp helpers.
+"""
+import hashlib
+from datetime import datetime, timezone
+
+def stable_hash(text: str) -> str:
+    """Return a deterministic SHA-256 hash of the given text."""
+    return hashlib.sha256(text.encode('utf-8')).hexdigest()
+
+def now():
+    """Return the current UTC datetime."""
+    return datetime.now(timezone.utc)
+
+"""
+Plain text parser for GestaltView Creator Toolkit.
+Reads .txt files and returns the content as a string.
+"""
+def parse_txt(path: str) -> str:
+    with open(path, 'r', encoding='utf-8', errors='ignore') as f:
+        return f.read()
+
+"""
+Context weaver for GestaltView Creator Toolkit.
+Constructs a simple knowledge graph linking documents based on shared entities.
+"""
+from typing import Dict, List
+from collections import defaultdict
+
+class KnowledgeGraph:
+    def __init__(self):
+        # Map from document ID to list of connected document IDs
+        self.nodes: Dict[str, List[str]] = {}
+        self.edges: Dict[str, List[str]] = defaultdict(list)
+
+    def add_document(self, doc_id: str, entities: List[str]):
+        """Add a document and its associated entities to the graph."""
+        self.nodes[doc_id] = entities
+        # connect to existing docs sharing entities
+        for other_id, other_entities in self.nodes.items():
+            if other_id == doc_id:
+                continue
+            if set(entities) & set(other_entities):
+                self.edges[doc_id].append(other_id)
+                self.edges[other_id].append(doc_id)
+
