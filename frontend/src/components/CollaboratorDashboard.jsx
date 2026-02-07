@@ -26,7 +26,8 @@ export default function CollaboratorDashboard() {
       });
       const data = await res.json();
       setDrops([data.drop, ...drops]);
-      setDropText('');
+      setDropText('');o 
+      
     } catch (err) {
       console.error(err);
     } finally {
