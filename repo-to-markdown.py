@@ -205,7 +205,7 @@ def main():
         
         # Project overview
         md.write("## Project Overview\n\n")
-        md.write("**Repository:** Resume Rockstar\n")
+        md.write("**Repository:**https://congenial-space-fiesta-q7r9g9q69xj63xq6j.github.dev/ \n")
         md.write(f"**Generated:** {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n\n")
         
         # Repository structure
