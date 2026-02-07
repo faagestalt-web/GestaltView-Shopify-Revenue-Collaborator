@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import {
   Card,
-  LegacyStack,
+  BlockStack,
   Select,
   TextField,
   Button,
@@ -45,7 +45,7 @@ export default function CreationCorner() {
 
   return (
     <Card sectioned>
-      <LegacyStack vertical spacing="loose">
+      <BlockStack gap="400">
         <Select label="Artifact Type" options={artifactOptions} onChange={setType} value={type} />
         <TextField
           label="Topic"
@@ -64,7 +64,7 @@ export default function CreationCorner() {
             <pre style={{ whiteSpace: 'pre-wrap' }}>{result.content || JSON.stringify(result, null, 2)}</pre>
           </div>
         )}
-      </LegacyStack>
+      </BlockStack>
     </Card>
   );
 }
